@@ -1,0 +1,25 @@
+body {
+    /* IMAGE API FOR DADS - SOME RANDOM IMAGES */
+    /* background-image: url('https://source.unsplash.com/1600x900/?dad'); */
+
+    /* IMAGE API FOR DADS - LESS RANDOM IMAGES BUT STILL SOME */
+    /* background-image: url('https://source.unsplash.com/1600x900/?collections/6759551/dad'); */
+
+    /* IMAGE API FOR CLASSIC CARS - THAT'S DAD RIGHT? */
+    /* background-image: url('https://source.unsplash.com/1600x900/?classic-cars'); */
+
+    /* IMAGE API FOR CIGARS - DAD'S PUFF CIGARS RIGHT? */
+    /* background-image: url('https://source.unsplash.com/1600x900/?cigar-lounge'); */
+
+    /* IMAGE API FOR GARAGE TOOLS - MIGHT BE DECENT? */
+    background-image: url('https://source.unsplash.com/1600x900/?garage-tools');
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* background-size: cover; */
+    background-position: center;
+}
+
+h1 {
+    font-size: 100px;
+}
