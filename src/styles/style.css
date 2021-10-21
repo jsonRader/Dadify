@@ -1,3 +1,45 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+header {
+    display: flex; 
+    flex-wrap: wrap; 
+    align-items: center;
+    justify-content:space-around;
+    padding: 10px;
+    height: 100px;
+    width: 100%;
+    align-items: center;          
+    background: #C41419;    
+    color: #F9DC94;
+    margin: 0 auto;  
+    /* position: fixed;   */
+}
+
+header h1{
+    color: #F9DC94;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.navItem {
+    color: #F9DC94;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.navItem:hover {
+    color: white;
+    cursor: pointer;
+}
+
 body {
     /* IMAGE API FOR DADS - SOME RANDOM IMAGES */
     /* background-image: url('https://source.unsplash.com/1600x900/?dad'); */
@@ -6,20 +48,174 @@ body {
     /* background-image: url('https://source.unsplash.com/1600x900/?collections/6759551/dad'); */
 
     /* IMAGE API FOR CLASSIC CARS - THAT'S DAD RIGHT? */
-    /* background-image: url('https://source.unsplash.com/1600x900/?classic-cars'); */
+    background-image: url('https://source.unsplash.com/1600x900/?classic-cars');
 
     /* IMAGE API FOR CIGARS - DAD'S PUFF CIGARS RIGHT? */
     /* background-image: url('https://source.unsplash.com/1600x900/?cigar-lounge'); */
 
     /* IMAGE API FOR GARAGE TOOLS - MIGHT BE DECENT? */
-    background-image: url('https://source.unsplash.com/1600x900/?garage-tools');
+    /* background-image: url('https://source.unsplash.com/1600x900/?garage-tools'); */
 
     background-repeat: no-repeat;
     background-attachment: fixed;
-    /* background-size: cover; */
+    background-size: cover;
     background-position: center;
 }
 
-h1 {
-    font-size: 100px;
+.loginMenu {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
+    padding: 20px;
+    background-color:#C41419 ;
+    opacity: 73%;
+    color: #F9DC94;
+    height: 300px;
+    width: 500px;
+    z-index: -3;
+}
+
+.loginMenuContent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    margin-top: -330px;
+}
+
+.signInMenuContent{ 
+    text-align: center;
+    height: 250px;
+    margin-top: -300px;
+}
+
+.signUpSection {
+    position: relative;
+    background-color:#F9DC94 ;
+    height: 50px;
+    width: 500px;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 35;
+    display: flex;
+    -ms-flex-align: center;
+    z-index: 5;
+    color: #C41419;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.signUpLink{
+    background-color: #C41419;
+    text-align: center;
+    justify-content: center;
+    margin-left: 10px;
+    color: #F9DC94;
+    text-decoration: none;
+    line-height: 35px;
+    height: 35px;
+    width: 100px;
+}
+
+.signUpLink:hover{
+    background-color: #C41419;
+    color: #6B7F82;
+    cursor: pointer;
+}
+
+.loginInputs{
+    position: relative;
+    display: flex;
+    margin: 20px;
+    justify-content: center;
+    height: 30px;
+    width: auto;
+    color: #F9DC94;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.signInInputs{
+    position: relative;
+    color: #F9DC94;
+    margin-top: 30px;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.signInInputs label{
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.signInInputs input{
+    height: 30px;
+}
+
+.buttonContainer{
+    position: relative;
+}
+
+.loginButton{
+    cursor: pointer;
+    height: 50px;
+    width: 100px;
+    position: absolute;
+    left: 50%;
+    margin-left: -50px;
+    top: 50%;
+    margin-top: -60px;
+    background-color: #F9DC94;
+    opacity: 100%;
+    color: #C41419;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.signInButton{
+    cursor: pointer;
+    height: 50px;
+    width: 100px;
+    position: absolute;
+    left: 50%;
+    margin-left: -50px;
+    top: 50%;
+    margin-top: 100px;
+    background-color: #C41419;
+    opacity: 100%;
+    color: #F9DC94;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.loginButton:hover{
+    background-color: #F9DC94;
+    color:#6B7F82 ;
+    cursor: pointer;
+}
+
+.inputareas {
+    margin-left: 10px;
+}
+
+.pageContainer{
+    background-color: #F9DC94;
+    height: auto;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
+    align-items: center;
+    text-align: center;
 }
