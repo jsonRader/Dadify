@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {useHistory, Link} from 'react-router-dom'
 // import { log in function -> handleRegister } from '../api/index';
+import API from '../api/api';
 
 const Register = ({
 	username, 
@@ -12,7 +13,10 @@ const Register = ({
 	setLoggedIn }) => {
 
 	const history = useHistory();
+	// const [username, setUsername] = useState("");
+	// const [password, setPassword] = useState("");
 
+	const [email, setEmail] = useState("");
 	const [confirmPassword, setconfirmPassword] = useState("");
 
 	const confirmPasswords = (event) => {
@@ -21,14 +25,17 @@ const Register = ({
 			history.push("/message");
 		} else {
 			registerRequest(event);
+			history.push("/");
 		}
 	};
 
 	const registerRequest = async (event) => {
 		event.preventDefault();
 		try {
-			const data = await handleRegister(username, password);
+			const user = {username, password, email};
+			const data = await API.makeRequest('/users/register', 'POST', user)
 			if (data.success === false) {
+				setEmail("");
 				setUsername("");
 				setPassword("");
 				setconfirmPassword("");
@@ -46,9 +53,9 @@ const Register = ({
 		}
 	};
 
-	if (registerToken) {
-		history.push("/")
-	}
+	// if (registerToken) {
+	// 	history.push("/")
+	// }
 
 	return (
 		<div>
@@ -56,6 +63,14 @@ const Register = ({
 					</div>
 			<form onSubmit={confirmPasswords}>
 				<div className="signInMenuContent">
+				<div className="signInInputs">
+				<label>email</label>
+					<input
+						name="email"
+						required
+						onChange={(event) => setEmail(event.target.value)} value={email}
+					/>
+				</div>
 				<div className="signInInputs">
 				<label>username</label>
 					<input
