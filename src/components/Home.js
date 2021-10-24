@@ -2,6 +2,8 @@ import React from 'react';
 import {useHistory, Link} from "react-router-dom";
 // import { log in function -> handleLogIn } from '../api/index';
 
+import API from '../api/api';
+
 const Home = ({username, password, setUsername, setPassword, setUserToken, loggedIn, setLoggedIn}) => {
 	const history = useHistory()
 
@@ -9,7 +11,8 @@ const Home = ({username, password, setUsername, setPassword, setUserToken, logge
 		event.preventDefault();
 		try {
             // USE API LOG IN FUNCTION HERE
-			const data = await handleLogIn(username, password);
+			const user = {username, password};
+			const data = await API.makeRequest('/users/login', 'POST', user);
 			if (data.error) {
 				history.push("/message");
 			} else {
