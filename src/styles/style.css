@@ -17,7 +17,6 @@ header {
     background: #C41419;    
     color: #F9DC94;
     margin: 0 auto;  
-    /* position: fixed;   */
 }
 
 header h1{
@@ -38,6 +37,62 @@ header h1{
 .navItem:hover {
     color: white;
     cursor: pointer;
+}
+
+.messageUnderHeader{
+    position: relative;
+    background-color:#F9DC94 ;
+    height: 50px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    -ms-flex-align: center;
+    z-index: 5;
+    color: #C41419;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.jokeLoader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 400px;
+    margin:-60px 0 0 -60px;
+    animation-name: book;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    transform-origin: 50% 50%;
+    display: inline-block;
+}
+
+@keyframes book {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.dadJoke {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
+    padding: 20px;
+    background-color:#C41419 ;
+    opacity: 73%;
+    color: #F9DC94;
+    height: 300px;
+    width: 500px;
+    z-index: -3;
 }
 
 body {
@@ -218,4 +273,19 @@ body {
     margin-top: 80px;
     align-items: center;
     text-align: center;
+}
+
+.single-product {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: #FFDD91;
+    margin: 2vh;
+    margin-left: 25vh;
+    margin-right: 25vh;
+    padding: 5vh;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: fit-content;
+    width: fit-content;
 }

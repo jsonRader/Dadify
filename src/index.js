@@ -93,7 +93,9 @@ const App = () => {
 					</Route>
 
 					<Route path="/products">
-						<Products />
+						<Products 
+							loggedIn={loggedIn}
+						/>
 					</Route>
 
 					<Route path="/deals">
