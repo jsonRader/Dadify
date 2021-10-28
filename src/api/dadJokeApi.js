@@ -1,19 +1,12 @@
-const BASE_URL = "https://afternoon-forest-55790.herokuapp.com/api";
-
-import TokenUtilities from './token';
+const DAD_URL = "https://icanhazdadjoke.com/api";
 
 export default {
     makeRequest: async function(path, method, data) {
-        const token = TokenUtilities.getToken();
         const defaultHeaders = {
             'Content-Type': 'application/json'
         }
-        if (token) {
-            defaultHeaders['authorization'] = `Bearer ${token}`;
-        }
         const options = {
             method,
-            // mode: "no-cors",
             headers: defaultHeaders
         }
         if (data) {

@@ -17,8 +17,6 @@ const Admin = (username) => {
 		}
 	}
 
-
-
 	return (
 		<div id="admin">
 			<h1>For The Admin Things</h1>

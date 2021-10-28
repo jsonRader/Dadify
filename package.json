@@ -18,9 +18,11 @@
     "url": "https://github.com/jsonRader/Dadify/issues"
   },
   "dependencies": {
+    "axios": "^0.23.0",
     "nodemon": "^2.0.13",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
     "react-router": "^5.2.1",
     "react-router-dom": "^5.3.0",
     "react-scripts": "^4.0.3"

@@ -97,9 +97,10 @@ const App = () => {
 					<Route path="/cart">
 						<Cart />
 					</Route>
-
-					<Route exact path="/products">
-						<Products />
+					<Route path="/products">
+						<Products 
+							loggedIn={loggedIn}
+						/>
 					</Route>
 
 					<Route path="/products/:productid">
