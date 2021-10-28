@@ -8,6 +8,7 @@ const Cart = () => {
 		<div id="cart">
 			<h1>For The Shopping Cart</h1>
 			<Link to="/">Back to Home</Link>
+			
 		</div>
 	)
 }

@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {useHistory, Link} from 'react-router-dom'
 // import { log in function -> handleRegister } from '../api/index';
 import API from '../api/api';
+import { getUserByUsername } from '../../../Dadify_Dadabase/db/user/user';
 
 const Register = ({
 	username, 
@@ -18,6 +19,7 @@ const Register = ({
 
 	const [email, setEmail] = useState("");
 	const [confirmPassword, setconfirmPassword] = useState("");
+	const [admin, setAdmin] = useState(false);
 
 	const confirmPasswords = (event) => {
 		event.preventDefault();

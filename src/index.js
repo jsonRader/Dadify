@@ -14,11 +14,13 @@ import {
 	Header,
 	Home,
 	Admin,
+	AdminUsers,
 	Cart,
 	Deals,
 	Jokes,
 	Message,
 	Products,
+	ProductPage
 } from './components';
 
 const App = () => {
@@ -88,13 +90,21 @@ const App = () => {
 						<Admin />
 					</Route>
 
+					<Route path="/adminusers">
+						<AdminUsers />
+					</Route>
+
 					<Route path="/cart">
 						<Cart />
 					</Route>
 
-					<Route path="/products">
+					<Route exact path="/products">
 						<Products />
 					</Route>
+
+					<Route path="/products/:productid">
+						<ProductPage />
+					</Route> 
 
 					<Route path="/deals">
 						<Deals />
