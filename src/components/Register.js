@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
-import {useHistory, Link} from 'react-router-dom'
-// import { log in function -> handleRegister } from '../api/index';
+import {useHistory} from 'react-router-dom'
 import API from '../api/api';
 
 const Register = ({
@@ -9,12 +8,9 @@ const Register = ({
 	setUsername, 
 	setPassword, 
 	setRegisterToken, 
-	registerToken, 
 	setLoggedIn }) => {
 
 	const history = useHistory();
-	// const [username, setUsername] = useState("");
-	// const [password, setPassword] = useState("");
 
 	const [email, setEmail] = useState("");
 	const [confirmPassword, setconfirmPassword] = useState("");
@@ -52,10 +48,6 @@ const Register = ({
 			console.error(error);
 		}
 	};
-
-	// if (registerToken) {
-	// 	history.push("/")
-	// }
 
 	return (
 		<div>

@@ -1,18 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {useHistory, Link} from "react-router-dom";
-// import { log in function -> handleLogIn } from '../api/index';
-
 import API from '../api/api';
 
 const LogIn = ({username, password, setUsername, setPassword, setUserToken, loggedIn, setLoggedIn}) => {
 	const history = useHistory()
 
-	// const [user, setUser] = useState({username, password});
-
 	const logInRequest = async (event) => {
 		event.preventDefault();
 		try {
-            // USE API LOG IN FUNCTION HERE
 			const user = {username, password};
 			const data = await API.makeRequest('/users/login', 'POST', user);
 			if (data.error) {
@@ -44,7 +39,6 @@ const LogIn = ({username, password, setUsername, setPassword, setUserToken, logg
 					<div className="loginMenu">
 					</div>
 					<div className="loginMenuContent">
-                        {/* logInRequest TRIGGERS API CALL */}
 						<form onSubmit={logInRequest}>
 							<div className="loginInputs">
 								<h2>username </h2>
