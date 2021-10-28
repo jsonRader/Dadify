@@ -13,6 +13,7 @@ export default {
         }
         const options = {
             method,
+            // mode: "no-cors",
             headers: defaultHeaders
         }
         if (data) {
