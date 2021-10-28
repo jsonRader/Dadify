@@ -1,16 +1,32 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {useHistory, Link} from "react-router-dom";
-// import { log in function -> handleLogIn } from '../api/index';
-
+import axios from 'axios';
 import API from '../api/api';
+import Dad_Joke_Book from '../images/Dad_Joke_Book.svg'
 
 const Home = ({username, password, setUsername, setPassword, setUserToken, loggedIn, setLoggedIn}) => {
+
+	const [dadJoke, setDadJoke] = useState("");
+	const [loadingJoke, setLoadingJoke] = useState(true);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			setLoadingJoke(true);
+			const result = await axios("https://us-central1-dadsofunny.cloudfunctions.net/DadJokes/random/type/general");
+			console.log(result.data);
+			setDadJoke(`${result.data[0].setup} ${result.data[0].punchline}`);
+			setLoadingJoke(false);
+		};
+		setTimeout(() => {
+			fetchData();
+		}, 3500);
+	}, [])
+
 	const history = useHistory()
 
 	const logInRequest = async (event) => {
 		event.preventDefault();
 		try {
-            // USE API LOG IN FUNCTION HERE
 			const user = {username, password};
 			const data = await API.makeRequest('/users/login', 'POST', user);
 			if (data.error) {
@@ -21,7 +37,6 @@ const Home = ({username, password, setUsername, setPassword, setUserToken, logge
 				setUserToken(token);
 				setLoggedIn(true);
 				setUsername(username);
-
 				localStorage.setItem(`Username`, username);
 				history.push("/");
 			}
@@ -33,15 +48,21 @@ const Home = ({username, password, setUsername, setPassword, setUserToken, logge
 	return (
 		<>
 			{loggedIn ?
-				<div className="messageUnderHeader">
-					<h3>Logged in as {localStorage.getItem(`Username`)}</h3>
-				</div>
+				<>
+					<div className="messageUnderHeader">
+						<h3>Logged in as {localStorage.getItem("Username")}</h3>
+					</div>
+					{loadingJoke ? 
+						<img className="jokeLoader" src={Dad_Joke_Book} alt="loader"/>
+					: <div className="dadJoke">
+						<h1>{dadJoke}</h1>
+					</div>}
+				</>
 				:
 				<>
 					<div className="loginMenu">
 					</div>
 					<div className="loginMenuContent">
-                        {/* logInRequest TRIGGERS API CALL */}
 						<form onSubmit={logInRequest}>
 							<div className="loginInputs">
 								<h2>username </h2>
