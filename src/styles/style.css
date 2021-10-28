@@ -103,7 +103,7 @@ body {
     /* background-image: url('https://source.unsplash.com/1600x900/?collections/6759551/dad'); */
 
     /* IMAGE API FOR CLASSIC CARS - THAT'S DAD RIGHT? */
-    background-image: url('https://source.unsplash.com/1600x900/?classic-cars');
+    /* background-image: url('https://source.unsplash.com/1600x900/?classic-cars'); */
 
     /* IMAGE API FOR CIGARS - DAD'S PUFF CIGARS RIGHT? */
     /* background-image: url('https://source.unsplash.com/1600x900/?cigar-lounge'); */
@@ -111,10 +111,13 @@ body {
     /* IMAGE API FOR GARAGE TOOLS - MIGHT BE DECENT? */
     /* background-image: url('https://source.unsplash.com/1600x900/?garage-tools'); */
 
+    /* background-image: url('https://source.unsplash.com/1600x900/?collections/1989985/cars'); */
+
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
+    background-color: #a0171b;
 }
 
 .loginMenu {

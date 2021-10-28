@@ -32,8 +32,6 @@ const AddNewProduct = ({setNewUserProduct}) => {
                 <div>
                     <input 
                         style={{marginTop: '1rem', marginLeft: '3rem', width: '33rem'}}
-                        color='primary'
-                        variant='outlined' 
                         name="name"
                         placeholder="Name"
                         label="Name"
@@ -42,8 +40,6 @@ const AddNewProduct = ({setNewUserProduct}) => {
                     />
                     <input 
                         style={{marginTop: '2rem', marginLeft: '3rem', width: '33rem'}}
-                        color='primary'
-                        variant='outlined'
                         name="description"
                         placeholder="Description"
                         label='Description'
@@ -53,8 +49,6 @@ const AddNewProduct = ({setNewUserProduct}) => {
                     />
                     <input
                         style={{marginTop: '2rem', marginLeft: '3rem', width: '33rem'}}
-                        color='primary'
-                        variant='outlined'
                         name="price"
                         placeholder="Price"
                         label='Price $'
@@ -63,8 +57,6 @@ const AddNewProduct = ({setNewUserProduct}) => {
                     />
                     <button 
                         style={{marginTop:'1rem', marginLeft: '3rem', width: '33rem'}}
-                        color='primary'
-                        variant='outlined'
                         onClick={handleSubmit}
                     >
                         Create Product
@@ -75,93 +67,109 @@ const AddNewProduct = ({setNewUserProduct}) => {
     )
 }
 
+// const EditProduct = ({setEditProduct}) => {
+//     const [patchProduct, setPatchProduct] = useState({name: '', description: '', price: ''});
 
-// const EditProduct = () => {
-    // const location = useLocation();
-    // const history = useHistory();
-    // const {id, name, description, price} = location.state;
-    // const [editProduct, setEditProduct] = useState({name: '', description: '', price: ''})
+// 	function handleChange(event, postKey) {
+//         const newState = {...patchProduct};
+//         newState[postKey] = event.target.value;
+//         setPatchProduct(newState);
+//     }
 
-    // function handleChange(
-    //     // event, postKey
-    //     ) {
-    //     const newState = {...editProduct};
-    //     // {postKey === 'isPublic' ? newState[postKey] = event.target.checked ? true : false : newState[postKey] = event.target.value};
-    //     setEditProduct(newState);
-    // }
-
-    // const [newProduct, setNewProduct] = useState({name: '', description: '', price: ''});
-
-	// function handleChange(event, postKey) {
-    //     const newState = {...newProduct};
-    //     newState[postKey] = event.target.value;
-    //     setNewProduct(newState);
-    // }
-
-    // async function deleteProduct(e) {
-    //     event.preventDefault();
-    //     try {
-    //         await API.makeRequest(`/products/${id}`, 'DELETE')
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    //     history.push('/products');
-    // }
-
-    // async function handleSubmit(e) {
-    //     try {
-    //         await API.makeRequest(`/products/${id}`, 'PATCH', EditProduct);
-
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    //     history.push('/products')
-    // }
-
-    // async function deleteActivity(e, activityId) {
-    //     try {
-    //         await API.makeRequest(`/routine_activities/${activityId}`, 'DELETE')
-    //     } catch (error) {
-    //         throw error;
-    //     }
-
-    // }
+//     const handleSubmit = async (event) => {
+//         event.preventDefault();
+// 		try {
+// 			const data = await API.makeRequest(`/products/${id}`, 'PATCH', patchProduct);
+// 			console.log(data);
+// 		} catch (error) {
+// 			console.error(error);
+// 		}
+//     }
 
 //     return (
-//         <div className='edit-routine'>
-//             <h1>Edit Product</h1>
-//                 <input value={name}
-//                            label='Name'
-//                            placeholder="Name"
-//                            type='text'
-//                            color='primary'
-//                         //    sx={{marginBottom: 3}}
-//                            onChange={(e) => handleChange(e, 'name')}
-//                            />
-//                 <input value={description}
-//                            label='description'
-//                            placeholder="description"
-//                            type='text'
-//                            color='primary'
-//                            onChange={(e) => handleChange(e, 'description')}
-//                            />
-//                 <input value={price}
-//                            label='price'
-//                            placeholder="price"
-//                            type='text'
-//                            color='primary'
-//                            onChange={(e) => handleChange(e, 'price')}
-//                            />
-//                     <button onClick={(e) => deleteProduct(e)}>Delete</button>
-//                     <button onClick={(e) => history.push('/products')}>Cancel</button>
-//                     <button onClick={(e) => handleSubmit(e)}>Submit</button>
+//         <div className="new-post">
+//             <form>
+//                 <FaTimesCircle 
+//                     style={{color: 'red', fontSize: '1.5rem', marginLeft:'37rem'}} 
+//                     onClick={() => setEditProduct(false)}
+//                 />
+//                 <div>
+//                     <input 
+//                         style={{marginTop: '1rem', marginLeft: '3rem', width: '33rem'}}
+//                         name="name"
+//                         placeholder="Name"
+//                         label="Name"
+//                         onChange= {(event) => handleChange(event, 'name')}
+//                         required
+//                     />
+//                     <input 
+//                         style={{marginTop: '2rem', marginLeft: '3rem', width: '33rem'}}
+//                         name="description"
+//                         placeholder="Description"
+//                         label='Description'
+//                         onChange= {(event) => handleChange(event, 'description')}
+//                         multiline="true"
+//                         required
+//                     />
+//                     <input
+//                         style={{marginTop: '2rem', marginLeft: '3rem', width: '33rem'}}
+//                         name="price"
+//                         placeholder="Price"
+//                         label='Price $'
+//                         onChange= {(event) => handleChange(event, 'price')}
+//                         required
+//                     />
+//                     <button 
+//                         style={{marginTop:'1rem', marginLeft: '3rem', width: '33rem'}}
+//                         onClick={handleSubmit}
+//                     >
+//                         Update
+//                     </button>
 //                 </div>
+//             </form>
+//         </div>
 //     )
 // }
 
+// const DeleteProduct = ({setDeleteProduct}) => {
+
+//     const handleSubmit = async (event) => {
+//         event.preventDefault();
+// 		try {
+// 			const data = await API.makeRequest(`/products/${id}`, 'DELETE');
+// 			console.log(data);
+// 		} catch (error) {
+// 			console.error(error);
+// 		}
+//     }
+
+//     return (
+//         <div className="new-post">
+//             <form>
+//                 <FaTimesCircle 
+//                     style={{color: 'red', fontSize: '1.5rem', marginLeft:'37rem'}} 
+//                     onClick={() => setDeleteProduct(false)}
+//                 />
+//                 <div>
+//                     <button 
+//                         style={{marginTop:'1rem', marginLeft: '3rem', width: '33rem'}}
+//                         onClick={handleSubmit}
+//                     >
+//                         Delete
+//                     </button>
+//                 </div>
+//             </form>
+//         </div>
+//     )
+// }
+
+
 const Products = ({loggedIn}) => {
 	const [products, setProducts] = useState([]);
+
 	const [newUserProduct, setNewUserProduct] = useState(false);
+    // const [editProduct, setEditProduct] = useState(false);
+    // const [deleteProduct, setDeleteProduct] = useState(false);
 
 	useEffect(async function() {
 		try {
@@ -171,36 +179,6 @@ const Products = ({loggedIn}) => {
 			throw error;
 		} 
 	}, []);
-
-	// async function deleteProduct(event, id) {
-    //     event.preventDefault();
-	// 	try {
-	// 		const data = await API.makeRequest(`/products/:${id}`, 'DELETE', id)
-	// 		setProducts(data)
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 	}
-    // }
-
-    // async function editProduct(event, id) {
-    //     event.preventDefault();
-	// 	try {
-	// 		const data = await API.makeRequest(`/products/:${id}`, 'PATCH', id)
-	// 		setProducts(data)
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 	}
-    // }
-
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault();
-	// 	try {
-	// 		const data = await API.makeRequest('/products', 'POST', newProduct);
-	// 		console.log(data);
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 	}
-    // }
 
 	return (
 		<div className="product-page">
@@ -230,57 +208,25 @@ const Products = ({loggedIn}) => {
                 ?
                     <>
                         <button
-                            onClick={(event) => {
-                                deleteProduct(event, product);
-                            }}>Delete Listing
-                        </button> 
-                        <form>
-                <FaTimesCircle 
-                    style={{color: 'red', fontSize: '1.5rem', marginLeft:'37rem'}} 
-                    onClick={() => setNewUserProduct(false)}
-                />
-                <div>
-                    <input 
-                        style={{marginTop: '1rem', marginLeft: '3rem', width: '33rem'}}
-                        color='primary'
-                        variant='outlined' 
-                        name="name"
-                        placeholder="Name"
-                        label="Name"
-                        onChange= {(event) => handleChange(event, 'name')}
-                        required
-                    />
-                    <input 
-                        style={{marginTop: '2rem', marginLeft: '3rem', width: '33rem'}}
-                        color='primary'
-                        variant='outlined'
-                        name="description"
-                        placeholder="Description"
-                        label='Description'
-                        onChange= {(event) => handleChange(event, 'description')}
-                        multiline="true"
-                        required
-                    />
-                    <input
-                        style={{marginTop: '2rem', marginLeft: '3rem', width: '33rem'}}
-                        color='primary'
-                        variant='outlined'
-                        name="price"
-                        placeholder="Price"
-                        label='Price $'
-                        onChange= {(event) => handleChange(event, 'price')}
-                        required
-                    />
-                    <button 
-                        style={{marginTop:'1rem', marginLeft: '3rem', width: '33rem'}}
-                        color='primary'
-                        variant='outlined'
-                        onClick={handleSubmit}
+                        style={{height: '3rem', marginTop: '.8rem'}}
+                        onClick={(event) => {
+                            event.preventDefault();
+                            setEditProduct(true)}}
                     >
-                        Create Product
+                        Edit Product
                     </button>
-                </div>
-            </form>
+                    {editProduct && <EditProduct setEditProduct={setEditProduct}/>}
+
+                    <button
+                        style={{height: '3rem', marginTop: '.8rem'}}
+                        onClick={(event) => {
+                            event.preventDefault();
+                            setDeleteProduct(true)}}
+                    >
+                        Delete Product
+                    </button>
+                    {deleteProduct && <DeleteProduct setDeleteProduct={setDeleteProduct}/>}
+
                     </>
                 :
                     ''
@@ -288,7 +234,6 @@ const Products = ({loggedIn}) => {
 						</div>
 					)
 				})}
-				
 			</div>
 		</div>
 	)
