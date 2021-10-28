@@ -14,10 +14,12 @@ const LogIn = ({username, password, setUsername, setPassword, setUserToken, logg
 				history.push("/message");
 			} else {
 				const token = data.token;
+				const user_id = data.id;
 				localStorage.setItem(`Token`, token);
 				setUserToken(token);
 				setLoggedIn(true);
 				setUsername(username);
+				localStorage.setItem(`UserId`, user_id);
 				localStorage.setItem(`Username`, username);
 				history.push("/");
 			}
