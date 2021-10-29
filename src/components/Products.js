@@ -1,95 +1,71 @@
-import React, {useState, useEffect} from 'react';
-import {useHistory} from 'react-router-dom';
-import {FaTimesCircle} from 'react-icons/fa'
+import React, {useEffect, useState} from "react";
+import {Link} from 'react-router-dom';
 import API from '../api/api';
 
-
-const AddNewProduct = ({setNewUserProduct}) => {
+const NewProduct = ({setNewUserProduct}) => {
     const [newProduct, setNewProduct] = useState({name: '', description: '', price: ''});
 
-	function handleChange(event, postKey) {
+    function handleChange(event, postKey) {
         const newState = {...newProduct};
         newState[postKey] = event.target.value;
         setNewProduct(newState);
     }
 
-    const handleSubmit = async (event) => {
+    async function handleSubmit(event) {
         event.preventDefault();
-		try {
+        		try {
 			const data = await API.makeRequest('/products', 'POST', newProduct);
 			console.log(data);
 		} catch (error) {
 			console.error(error);
 		}
+        setNewUserProduct(false);
     }
 
     return (
         <div className="new-post">
             <form>
-                <FaTimesCircle 
-                    style={{color: 'red', fontSize: '1.5rem', marginLeft:'37rem'}} 
-                    onClick={() => setNewUserProduct(false)}
-                />
+                <button onClick={() => setNewUserProduct(false)}>CLOSE</button>
                 <div>
                     <input 
-                        style={{marginTop: '1rem', marginLeft: '3rem', width: '33rem'}}
-                        name="name"
-                        placeholder="Name"
-                        label="Name"
+                        name='name'
                         onChange= {(event) => handleChange(event, 'name')}
+                        placeholder='name'
                         required
                     />
                     <input 
-                        style={{marginTop: '2rem', marginLeft: '3rem', width: '33rem'}}
-                        name="description"
-                        placeholder="Description"
-                        label='Description'
+                        name='description'
                         onChange= {(event) => handleChange(event, 'description')}
+                        placeholder='Description'
                         multiline="true"
                         required
                     />
-                    <input
-                        style={{marginTop: '2rem', marginLeft: '3rem', width: '33rem'}}
-                        name="price"
-                        placeholder="Price"
-                        label='Price $'
+                    <input 
+                        name='price'
                         onChange= {(event) => handleChange(event, 'price')}
+                        placeholder='Price'
                         required
                     />
-                    <button 
-                        style={{marginTop:'1rem', marginLeft: '3rem', width: '33rem'}}
-                        onClick={handleSubmit}
-                    >
-                        Create Product
-                    </button>
+                    <button onClick={handleSubmit}>Add Product</button>
                 </div>
             </form>
         </div>
     )
 }
 
-const EditProduct = ({setEditProduct, productId}) => {
-    const [patchProduct, setPatchProduct] = useState({name: '', description: '', price: ''});
+const ProductBoard = ({productBoard, setProductBoard, loggedIn}) => {
+    const productId = productBoard._id;
+    const isAdmin = productBoard.isAdmin;
 
-	function handleChange(event, postKey) {
-        const newState = {...patchProduct};
-        newState[postKey] = event.target.value;
-        setPatchProduct(newState);
-    }
-
-    const handleSubmit = async (event) => {
+    function sendToCart(event) {
         event.preventDefault();
-		try {
-			const data = await API.makeRequest(`/products/${productId}`, 'PATCH', patchProduct);
-			console.log(data);
-		} catch (error) {
-			console.error(error);
-		}
+        //SEND TO CART
     }
 
-    async function deleteProduct(e) {
+    async function deleteProduct(event, id) {
+        event.preventDefault();
         try {
-            const deleteItem = await API.makeRequest(`/products/${productId}`, 'DELETE');
+            const deleteItem = await API.makeRequest(`/products/${id}`, 'DELETE');
             console.log(deleteItem);
         } catch (error) {
             throw error;
@@ -97,125 +73,147 @@ const EditProduct = ({setEditProduct, productId}) => {
     }
 
     return (
-        <div className="new-post">
-            <button 
-                        style={{marginTop:'1rem', marginLeft: '3rem', width: '33rem'}}
-                        onClick={(e) => deleteProduct(e)}
-                    >
-                        Delete
-                    </button>
-            <form>
-                <FaTimesCircle 
-                    style={{color: 'red', fontSize: '1.5rem', marginLeft:'37rem'}} 
-                    onClick={() => setEditProduct(false)}
-                />
-                <div>
-                    <input 
-                        style={{marginTop: '1rem', marginLeft: '3rem', width: '33rem'}}
-                        name="name"
-                        placeholder="Name"
-                        label="Name"
-                        onChange= {(event) => handleChange(event, 'name')}
-                        required
-                    />
-                    <input 
-                        style={{marginTop: '2rem', marginLeft: '3rem', width: '33rem'}}
-                        name="description"
-                        placeholder="Description"
-                        label='Description'
-                        onChange= {(event) => handleChange(event, 'description')}
-                        multiline="true"
-                        required
-                    />
-                    <input
-                        style={{marginTop: '2rem', marginLeft: '3rem', width: '33rem'}}
-                        name="price"
-                        placeholder="Price"
-                        label='Price $'
-                        onChange= {(event) => handleChange(event, 'price')}
-                        required
-                    />
-                    <button 
-                        style={{marginTop:'1rem', marginLeft: '3rem', width: '33rem'}}
-                        onClick={handleSubmit}
-                    >
-                        Update
-                    </button>
-                    {/* <button 
-                        style={{marginTop:'1rem', marginLeft: '3rem', width: '33rem'}}
-                        onClick={(e) => deleteProduct(e)}
-                    >
-                        Delete
-                    </button> */}
-                </div>
-            </form>
+        <div id="featured-post">
+            <div className="post-inquiry">
+                <button onClick={() => setProductBoard(false)}>CLOSE</button>
+                <h1>{productBoard.name}</h1>
+                <p>{productBoard.description}</p>
+                <h4>${productBoard.price}</h4>
+                {loggedIn 
+                    ? isAdmin 
+                        ? 
+                            <div className="post-messages">
+                                <div>
+                                <button onClick={sendToCart}>Add to Cart</button>
+                                </div>
+                                <div>
+                                <button onClick={deleteProduct}>Delete</button>
+                                </div>
+                                {/* <button onClick={editProduct}>Edit Product</button> */}
+                            </div>
+                        :
+                            <>
+                                <div>
+                                <button onClick={sendToCart}>Add to Cart</button>
+                                </div>
+                                <div>
+                                <button onClick={deleteProduct}>Delete</button>
+                                </div>
+                                {/* <button onClick={editProduct}>Edit Product</button> */}
+                            </>
+                    : null
+                }
+            </div>
         </div>
     )
 }
 
-const Products = ({loggedIn}) => {
-	const [products, setProducts] = useState([]);
+const UserProduct = ({product, name, description, price, setProductBoard, isAdmin, productId, deleteProduct}) => {
 
-	const [newUserProduct, setNewUserProduct] = useState(false);
-    const [editProduct, setEditProduct] = useState(false, null);
-    // const [deleteProduct, setDeleteProduct] = useState(false);
-
-	useEffect(async function() {
-		try {
-			const data = await API.makeRequest('/products', 'GET');
-			setProducts(data);
-		} catch (error) {
-			throw error;
-		} 
-	}, []);
-
-	return (
-		<div className="product-page">
-			<div className="new-product">
-			{loggedIn && 
-                    <button
-                        style={{height: '3rem', marginTop: '.8rem'}}
-                        color="primary"
-                        variant="outlined"
-                        onClick={(event) => {
-                            event.preventDefault();
-                            setNewUserProduct(true)}}
-                    >
-                        Create Product
-                    </button>
-                }
-			</div>
-			{newUserProduct && <AddNewProduct setNewUserProduct={setNewUserProduct}/>}
-			<div>
-				{products.map((product, id) => {
-					return (
-						<div key={id} className= "single-product">
-							<h1>{product.name}</h1>
-							<h2>{product.description}</h2>
-							<h3>${product.price}</h3>
-							{loggedIn 
+    return (
+        <div id="user-post">
+            <h2>{name}</h2>
+            <p>{description}</p>
+            <h4>Price: {price}</h4>
+            <button
+                onClick={(event) => {
+                    event.preventDefault();
+                    setProductBoard(product);
+                }}>View More
+            </button>            
+            {isAdmin 
                 ?
                     <>
                         <button
-                        style={{height: '3rem', marginTop: '.8rem'}}
-                        onClick={(event) => {
-                            event.preventDefault();
-                            setEditProduct(true, id)}}
-                    >
-                        Edit Product
-                    </button>
-                    {editProduct && <EditProduct setEditProduct={setEditProduct}/>}
-
+                            onClick={(event) => {
+                                deleteProduct(event, productId);
+                            }}>Delete Product
+                        </button> 
                     </>
                 :
                     ''
             }
-						</div>
-					)
-				})}
-			</div>
-		</div>
-	)
+        </div>
+    )
 }
 
-export default Products
+const SearchProducts = ({search, setSearch}) => {
+    return (
+        <input 
+            variant="filled"
+            placeholder="Search Products..."
+            type='text'
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+        />
+    )
+}
+
+const Products = ({
+    loggedIn, 
+    userProducts, 
+    setUserProducts, 
+    productBoard, 
+    setProductBoard
+}) => {
+    const [newUserProduct, setNewUserProduct] = useState(false);
+    const [search, setSearch] = useState('')
+
+    const filteredProducts = search.length === 0 
+        ? userProducts 
+        : userProducts.filter(product => product.description.toLowerCase().includes(search.toLowerCase()) || 
+          product.name.toLowerCase().includes(search.toLowerCase()) ||
+          product.price.includes(search)
+        );
+
+    useEffect(async function() {
+        const data = await API.makeRequest('/products', 'GET')
+        setUserProducts(data);
+    }, [])
+
+    return (
+        <div className="product-page">
+            <div className="posts-header">
+                <h1>Products</h1>
+                <SearchProducts 
+                    userProducts={userProducts}
+                    setUserProducts={setUserProducts}
+                    search={search}
+                    setSearch={setSearch}
+                />
+                {loggedIn && <button onClick={(event) => {
+                                     event.preventDefault();
+                                     setNewUserProduct(true)}}>
+                                     Add Product
+                             </button>
+                }
+            </div>
+            {newUserProduct && <NewProduct setNewUserProduct={setNewUserProduct}/>}
+            <div className="single-product">
+                {filteredProducts.map((product, index) => 
+                    <UserProduct 
+                    product={product}
+                        name={product.name}
+                        description={product.description}
+                        price={product.price}
+                        setProductBoard={setProductBoard}
+                        key={index}
+                        isAdmin={product.isAdmin}
+                        productId={product._id}
+                    />)}   
+            </div>
+            {!productBoard
+                ?
+                    <>
+                    </>
+                : <ProductBoard
+                    productBoard={productBoard}
+                    setProductBoard={setProductBoard}
+                    loggedIn={loggedIn}
+                />
+            }       
+        </div>
+    )
+}
+
+export default Products;

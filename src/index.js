@@ -35,6 +35,8 @@ const App = () => {
 	const [registerToken, setRegisterToken] = useState('');
 	const [userToken, setUserToken] = useState('');
 
+	const [productBoard, setProductBoard] = useState(null);
+	const [userProducts, setUserProducts] = useState([]);
 
 	useEffect(() => {
 		{localStorage.getItem('Token') 
@@ -106,6 +108,10 @@ const App = () => {
 					<Route path="/products">
 						<Products 
 							loggedIn={loggedIn}
+							userProducts={userProducts}
+							setUserProducts={setUserProducts}
+							productBoard={productBoard}
+							setProductBoard={setProductBoard}
 						/>
 					</Route>
 
