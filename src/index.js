@@ -20,8 +20,13 @@ import {
 	Jokes,
 	Message,
 	Products,
-	ProductPage
+	// SingleProduct
 } from './components';
+
+// import {
+// 	Products,
+// 	SingleProduct
+// } from './components/Products'
 
 const App = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -29,6 +34,7 @@ const App = () => {
 	const [username, setUsername] = useState('');
 	const [registerToken, setRegisterToken] = useState('');
 	const [userToken, setUserToken] = useState('');
+
 
 	useEffect(() => {
 		{localStorage.getItem('Token') 
@@ -103,9 +109,17 @@ const App = () => {
 						/>
 					</Route>
 
-					<Route path="/products/:productid">
-						<ProductPage />
-					</Route> 
+					{/* <Route exact path="/products/:productId">
+						<SingleProduct 
+							allProducts = {allProducts}
+                            cart = {cart}
+                            setCart = {_setCart}
+                            token = {token}
+                            userData={userData}
+                            setUserData = {setUserData}
+                            setAllProducts = {setAllProducts}
+						/>
+					</Route>  */}
 
 					<Route path="/deals">
 						<Deals />

@@ -18,6 +18,8 @@
     "url": "https://github.com/jsonRader/Dadify/issues"
   },
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
     "axios": "^0.23.0",
     "nodemon": "^2.0.13",
     "react": "^17.0.2",
