@@ -21,6 +21,7 @@ const LogIn = ({username, password, setUsername, setPassword, setUserToken, logg
 				setUsername(username);
 				localStorage.setItem(`UserId`, user_id);
 				localStorage.setItem(`Username`, username);
+				
 				history.push("/");
 			}
 		} catch (error) {

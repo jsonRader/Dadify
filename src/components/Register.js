@@ -43,6 +43,7 @@ const Register = ({
 				setUsername(username);
 				setLoggedIn(false);
 				localStorage.setItem(`Username`, username);
+				await API.makeRequest('')
 				console.log(data);
 			}
 		} catch (error) {

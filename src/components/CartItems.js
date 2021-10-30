@@ -7,10 +7,14 @@ import API from '../api/api';
 
 const CartItems = ({cartId, id, name, price, productId, itemQuantity, setRender}) => {
     const [updateQuantity, setUpdateQuantity] = useState({quantity: itemQuantity});
-    async function updateItemQuantity(e) {
+    const [editItem, setEditItem] = useState(false);
+    function updateItemQuantity(e) {
         setUpdateQuantity({quantity: Number(e.target.value)})
         console.log(updateQuantity);
         console.log(id);
+    }
+
+    async function submitEdit(e) {
         try {
             const data = await API.makeRequest(`/cart_item/${id}`, 'PATCH', updateQuantity);
             console.log(data);
@@ -18,6 +22,7 @@ const CartItems = ({cartId, id, name, price, productId, itemQuantity, setRender}
             throw error;
         } finally {
             setRender(updateQuantity.quantity);
+            setEditItem(false);
         }
     }
 
@@ -35,7 +40,15 @@ const CartItems = ({cartId, id, name, price, productId, itemQuantity, setRender}
         <div className='cart-item'>
             <h3>Name: {name}</h3>
             <h4>Price: {price}</h4>
-            <h5>Quantity: <input defaultValue={itemQuantity} type='number' onChange={(e) => updateItemQuantity(e)}></input></h5>
+            {
+                editItem ?
+                <>
+                <h5>Quantity: <input type='number' defaultValue={itemQuantity} onChange={(e) => updateItemQuantity(e)}></input></h5>
+                <button onClick={(e) => submitEdit(e)}>Update</button><button onClick={() => setEditItem(false)}>Cancel</button>
+                </>
+                :
+                <h5>Quantity: {itemQuantity}<button onClick={() => setEditItem(true)}>Change</button></h5>
+            }
             <div>
                 <button onClick={(e) => removeItem(e)}>Remove Item</button>
             </div>
