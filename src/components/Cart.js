@@ -1,14 +1,18 @@
+import { Button } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 import {
-    Link
+    Link,
+	useHistory
 } from 'react-router-dom';
 import API from '../api/api';
 import CartItems from './CartItems';
 
 const Cart = () => {
 
+	const history = useHistory();
 	const [cart, setCart] = useState([]);
 	const [render, setRender] = useState(0)
+	const [confirmation, setConfirmation] = useState(false);
 	const user_id = localStorage.getItem('UserId')
 	useEffect( async function() {
 		try {
@@ -20,8 +24,22 @@ const Cart = () => {
 		} 
 	}, [render]);
 
+	async function checkout(e) {
+		try {
+			setConfirmation(true);
+			const data = await API.makeRequest(`/cart_item/clear_cart/${cart.id}`, 'DELETE');
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	function backToHome(e) {
+		setConfirmation(false);
+		history.push('/')
+	}
+
 	let total = Number();
-	let cartItemElements;
+	let cartItemElements = [];
 	if(cart.items) {
 		const items = cart.items;
 		
@@ -29,7 +47,6 @@ const Cart = () => {
 			total += item.price * item.quantity;
 		});
 		total = total.toFixed(2);
-		console.log(total);
 		cartItemElements = cart.items.map((item, i) => {
 			return <CartItems cartId={item.cart_id}
 							  id={item.id}
@@ -55,15 +72,40 @@ const Cart = () => {
 	
 	return (
 		<div id="cart">
-			<h1>For The Shopping Cart</h1>
-			<Link to="/">Back to Home</Link>
-			<div>
-				{cartItemElements}
+			<div className='cart-header'>
+				<h1>For The Shopping Cart</h1>
+				<Link to="/">Back to Home</Link>
 			</div>
-			<div>
-			<h1>Total: {total}</h1>
+			<div className='cart-items'>
+				{
+					cart.items ?
+					<>
+					{cartItemElements}
+					<div className='cart-footer'>
+						<h1>Total: {total}</h1>
+					</div>
+					<Button id='cart-button' onClick={(e) => checkout(e)}>Checkout</Button>
+					</>
+					:
+					<div>
+						<h2>No items in the cart.</h2>
+					</div>
+				}
 			</div>
-			<button>Checkout</button>
+			{
+				confirmation ?
+				<div className='confirmation-page'>
+					<div className='confirmation-content'>
+						<h2>
+							Order Confirmed!
+						</h2>
+						<Button onClick={(e) => backToHome(e)}>Return to Home</Button>
+					</div>
+				</div>
+				:
+				<>
+				</>
+			}
 		</div>
 	)
 }

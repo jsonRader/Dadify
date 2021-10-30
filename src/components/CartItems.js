@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react';
 import {
@@ -38,19 +39,20 @@ const CartItems = ({cartId, id, name, price, productId, itemQuantity, setRender}
     }
     return (
         <div className='cart-item'>
-            <h3>Name: {name}</h3>
-            <h4>Price: {price}</h4>
+            <h2>Name: {name}</h2>
+            <br></br>
+            <h3>Price: {price}</h3>
             {
                 editItem ?
                 <>
-                <h5>Quantity: <input type='number' defaultValue={itemQuantity} onChange={(e) => updateItemQuantity(e)}></input></h5>
-                <button onClick={(e) => submitEdit(e)}>Update</button><button onClick={() => setEditItem(false)}>Cancel</button>
+                <h3>Quantity: <input type='number' defaultValue={itemQuantity} onChange={(e) => updateItemQuantity(e)}></input></h3>
+                <Button id='cart-button' style={{marginRight:'2px'}} onClick={(e) => submitEdit(e)}>Update</Button><Button id='cart-button' style={{marginLeft: '2px'}} onClick={() => setEditItem(false)}>Cancel</Button>
                 </>
                 :
-                <h5>Quantity: {itemQuantity}<button onClick={() => setEditItem(true)}>Change</button></h5>
+                <h3>Quantity: {itemQuantity}<Button style={{marginLeft: '6px', marginBottom: '18px'}} id='cart-button' onClick={() => setEditItem(true)}>Change</Button></h3>
             }
             <div>
-                <button onClick={(e) => removeItem(e)}>Remove Item</button>
+                <Button id='cart-button' onClick={(e) => removeItem(e)}>Remove Item</Button>
             </div>
         </div>
     )
