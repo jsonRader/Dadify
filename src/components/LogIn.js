@@ -10,6 +10,8 @@ const LogIn = ({username, password, setUsername, setPassword, setUserToken, logg
 		try {
 			const user = {username, password};
 			const data = await API.makeRequest('/users/login', 'POST', user);
+			// const cartData = await API.makeRequest(`/cart/${data.id}`, 'GET')
+			// console.log(cartData);
 			if (data.error) {
 				history.push("/message");
 			} else {
@@ -21,6 +23,9 @@ const LogIn = ({username, password, setUsername, setPassword, setUserToken, logg
 				setUsername(username);
 				localStorage.setItem(`UserId`, user_id);
 				localStorage.setItem(`Username`, username);
+				// const user_id = localStorage.getItem('UserId')
+				const cartData = await API.makeRequest(`/cart/${user_id}`, 'GET')
+				console.log(cartData);
 				history.push("/");
 			}
 		} catch (error) {
