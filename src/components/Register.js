@@ -31,20 +31,30 @@ const Register = ({
 		try {
 			const user = {username, password, email};
 			const data = await API.makeRequest('/users/register', 'POST', user)
-			if (data.success === false) {
+			const token = data.token;
+			const cartData = await API.makeRequest(`/cart/${data.id}`, 'POST', {total: 0})
+			console.log(cartData);
+			if (token) {
+				localStorage.setItem(`Token`, token);
 				setEmail("");
 				setUsername("");
 				setPassword("");
 				setconfirmPassword("");
-			} else {
-				const token = data.token;
-				localStorage.setItem(`Token`, token);
 				setRegisterToken(token);
-				setUsername(username);
-				setLoggedIn(false);
-				localStorage.setItem(`Username`, username);
-				await API.makeRequest('')
-				console.log(data);
+				await API.makeRequest('/users/login', 'POST', user)
+				history.push('/');
+				// const cartData = await API.makeRequest(`/cart/${data.id}`, 'POST', {total: 0})
+				// console.log(cartData);
+				// alert(data.message)
+			} else {
+				// const token = data.token;
+				// localStorage.setItem(`Token`, token);
+				// setRegisterToken(token);
+				// setUsername(username);
+				// setLoggedIn(false);
+				// localStorage.setItem(`Username`, username);
+				// console.log(data);
+				alert(data.message)
 			}
 		} catch (error) {
 			console.error(error);
