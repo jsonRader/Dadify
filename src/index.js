@@ -35,7 +35,7 @@ const App = () => {
 	const [registerToken, setRegisterToken] = useState('');
 	const [userToken, setUserToken] = useState('');
 
-	const [isAdmin, setIsAdmin] = useState(null);
+	const [isAdmin, setIsAdmin] = useState(false);
 
 	const [productBoard, setProductBoard] = useState(null);
 	const [userProducts, setUserProducts] = useState([]);

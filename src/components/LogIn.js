@@ -6,7 +6,7 @@ const LogIn = ({username, password, setUsername, setPassword, setUserToken, logg
 	const history = useHistory()
 
 	// console.log('HERE?');
-	
+
 	const logInRequest = async (event) => {
 		event.preventDefault();
 		try {
@@ -33,8 +33,8 @@ const LogIn = ({username, password, setUsername, setPassword, setUserToken, logg
 				localStorage.setItem(`Username`, username);
 				// const user_id = localStorage.getItem('UserId')
 
-				// const cartData = await API.makeRequest(`/cart/${user_id}`, 'GET')
-				// console.log(cartData);
+				const cartData = await API.makeRequest(`/cart/${user_id}`, 'GET')
+				console.log(cartData);
 				history.push("/");
 			}
 		} catch (error) {

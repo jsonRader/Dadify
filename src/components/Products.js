@@ -6,7 +6,7 @@ import {FaTimesCircle} from 'react-icons/fa';
 import { TextField } from '@material-ui/core';
 import {Button} from '@material-ui/core';
 
-const NewProduct = ({setNewUserProduct, setRender}) => {
+const NewProduct = ({setNewUserProduct, setRender, isAdmin}) => {
     // const [render, setRender] = useState([]);
     const [newProduct, setNewProduct] = useState({name: '', description: '', price: ''});
 
@@ -29,7 +29,9 @@ const NewProduct = ({setNewUserProduct, setRender}) => {
     }
 
     return (
-        <div className="new-post">
+        <>
+        {isAdmin ?
+            <div className="new-post">
             <form>
                 <FaTimesCircle 
                     style={{color: '#F9DC94', fontSize: '1.5rem', marginLeft:'60rem'}} 
@@ -64,10 +66,15 @@ const NewProduct = ({setNewUserProduct, setRender}) => {
                 </div>
             </form>
         </div>
+        :
+        <>
+        </>
+}
+</>
     )
 }
 
-const ProductBoard = ({productBoard, setProductBoard, loggedIn, isAdmin}) => {
+const ProductBoard = ({productBoard, setProductBoard, loggedIn, isAdmin, setRender}) => {
     const productId = productBoard.id;
     // const isAdmin = productBoard.isAdmin;
 
@@ -93,39 +100,55 @@ console.log('PRODUCT ID', productId);
         try {
             const deleteItem = await API.makeRequest(`/products/${id}`, 'DELETE');
             console.log(deleteItem);
+            setRender(Math.random());
         } catch (error) {
             throw error;
         }
     }
-
+console.log(isAdmin);
     return (
-        <div id="featured-post">
-            <div className="post-inquiry">
-                <button onClick={() => setProductBoard(false)}>CLOSE</button>
+        <div className="featured-product">
+            <div className="product-inquiry">
+            <FaTimesCircle 
+                    style={{marginLeft: '95%', color: '#C41419', fontSize: '1.5rem'}} 
+                    onClick={() => setProductBoard(false)}/>
                 <h1>{productBoard.name}</h1>
-                <p>{productBoard.description}</p>
-                <h4>${productBoard.price}</h4>
+                <h2>{productBoard.description}</h2>
+                <h3>${productBoard.price}</h3>
                 {isAdmin 
                         ? 
-                            <div className="post-messages">
+                            <div>
                                 <div>
-                                <button onClick={(e) => sendToCart(e, productId)}>Add to Cart</button>
+                                    <Button
+                                        id="admin-button" 
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={(e) => sendToCart(e, productId)}>Add to Cart</Button>
                                 </div>
                                 <div>
-                                <button onClick={(e) => deleteProduct(e, productId)}>Delete</button>
+                                    <Button
+                                        id="admin-button" 
+                                        variant="contained"
+                                        color="secondary"
+                                    >Edit Product</Button>
                                 </div>
-                                <button>Edit Product</button>
+                                <div>
+                                    <Button 
+                                    id="admin-button" 
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={(e) => deleteProduct(e, productId)}>Delete</Button>
+                                </div>
                             </div>
                         :
                             <>
-                                {/* <div>
-                                <button onClick={(e) => sendToCart(e, productId)}>Add to Cart</button>
-                                </div>
                                 <div>
-                                <button onClick={(e) => deleteProduct(e, productId)}>Delete</button>
+                                <Button 
+                                    id="visitor-button" 
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={(e) => sendToCart(e, productId)}>Add to Cart</Button>
                                 </div>
-                                <button>Edit Product</button> */}
-                                <button onClick={(e) => sendToCart(e, productId)}>Add to Cart</button>
                             </>
                 }
             </div>
@@ -149,19 +172,7 @@ const UserProduct = ({product, name, description, price, setProductBoard, isAdmi
                     event.preventDefault();
                     setProductBoard(product);
                     }}>View More
-                </Button>            
-            {isAdmin 
-                ?
-                    <>
-                        <button
-                            onClick={(event) => {
-                                deleteProduct(event, productId);
-                            }}>Delete Product
-                        </button> 
-                    </>
-                :
-                    ''
-            }
+                </Button>
             </div>
         </div>
     )
@@ -185,7 +196,9 @@ const Products = ({
     userProducts, 
     setUserProducts, 
     productBoard, 
-    setProductBoard
+    setProductBoard,
+    isAdmin,
+    // setRender
 }) => {
     const [newUserProduct, setNewUserProduct] = useState(false);
     const [search, setSearch] = useState('')
@@ -218,7 +231,7 @@ const Products = ({
                     search={search}
                     setSearch={setSearch}
                 />
-                {loggedIn && <Button id="product-button"
+                {isAdmin && <Button id="product-button"
                 onClick={(event) => {
                                      event.preventDefault();
                                      setNewUserProduct(true)}}>
@@ -227,7 +240,7 @@ const Products = ({
                 }
             </div>
             <div className="add-product">
-                {newUserProduct && <NewProduct setNewUserProduct={setNewUserProduct} setRender={setRender}/>}
+                {newUserProduct && <NewProduct setNewUserProduct={setNewUserProduct} isAdmin={isAdmin} setRender={setRender}/>}
             </div>
             <div className="products">
 
@@ -257,6 +270,8 @@ const Products = ({
                     productBoard={productBoard}
                     setProductBoard={setProductBoard}
                     loggedIn={loggedIn}
+                    isAdmin={isAdmin}
+                    setRender={setRender}
                 />
             }       
         </div>
