@@ -67,9 +67,9 @@ const NewProduct = ({setNewUserProduct, setRender}) => {
     )
 }
 
-const ProductBoard = ({productBoard, setProductBoard, loggedIn}) => {
+const ProductBoard = ({productBoard, setProductBoard, loggedIn, isAdmin}) => {
     const productId = productBoard.id;
-    const isAdmin = productBoard.isAdmin;
+    // const isAdmin = productBoard.isAdmin;
 
 console.log('PRODUCT BOARD', productBoard);
 console.log('PRODUCT ID', productId);
@@ -105,8 +105,7 @@ console.log('PRODUCT ID', productId);
                 <h1>{productBoard.name}</h1>
                 <p>{productBoard.description}</p>
                 <h4>${productBoard.price}</h4>
-                {loggedIn 
-                    ? isAdmin 
+                {isAdmin 
                         ? 
                             <div className="post-messages">
                                 <div>
@@ -119,15 +118,15 @@ console.log('PRODUCT ID', productId);
                             </div>
                         :
                             <>
-                                <div>
+                                {/* <div>
                                 <button onClick={(e) => sendToCart(e, productId)}>Add to Cart</button>
                                 </div>
                                 <div>
                                 <button onClick={(e) => deleteProduct(e, productId)}>Delete</button>
                                 </div>
-                                <button>Edit Product</button>
+                                <button>Edit Product</button> */}
+                                <button onClick={(e) => sendToCart(e, productId)}>Add to Cart</button>
                             </>
-                    : null
                 }
             </div>
         </div>
