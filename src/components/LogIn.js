@@ -2,37 +2,46 @@ import React from 'react';
 import {useHistory, Link} from "react-router-dom";
 import API from '../api/api';
 
-const LogIn = ({username, password, setUsername, setPassword, setUserToken, loggedIn, setLoggedIn}) => {
+const LogIn = ({username, password, setUsername, setPassword, setUserToken, loggedIn, setLoggedIn, isAdmin, setIsAdmin}) => {
 	const history = useHistory()
 
+	// console.log('HERE?');
+	
 	const logInRequest = async (event) => {
 		event.preventDefault();
 		try {
 			const user = {username, password};
 			const data = await API.makeRequest('/users/login', 'POST', user);
-			// const cartData = await API.makeRequest(`/cart/${data.id}`, 'GET')
-			// console.log(cartData);
+			console.log(data);
+
+			setIsAdmin(data.isAdmin);
+			// console.log('DATA.ISADMIN:', isAdmin);
+
 			if (data.error) {
 				history.push("/message");
+
 			} else {
 				const token = data.token;
 				const user_id = data.id;
+				// const isAdmin = data.isAdmin
 				localStorage.setItem(`Token`, token);
 				setUserToken(token);
 				setLoggedIn(true);
 				setUsername(username);
+
 				localStorage.setItem(`UserId`, user_id);
 				localStorage.setItem(`Username`, username);
 				// const user_id = localStorage.getItem('UserId')
-				const cartData = await API.makeRequest(`/cart/${user_id}`, 'GET')
-				console.log(cartData);
+
+				// const cartData = await API.makeRequest(`/cart/${user_id}`, 'GET')
+				// console.log(cartData);
 				history.push("/");
 			}
 		} catch (error) {
 			console.error(error);
 		}
 	};
-
+	console.log('DATA.ISADMIN:', isAdmin);
 	return (
 		<>
 			{loggedIn ?

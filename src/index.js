@@ -35,6 +35,8 @@ const App = () => {
 	const [registerToken, setRegisterToken] = useState('');
 	const [userToken, setUserToken] = useState('');
 
+	const [isAdmin, setIsAdmin] = useState(null);
+
 	const [productBoard, setProductBoard] = useState(null);
 	const [userProducts, setUserProducts] = useState([]);
 
@@ -51,6 +53,7 @@ const App = () => {
 				<Header 
 					loggedIn={loggedIn}
 					setLoggedIn={setLoggedIn}
+					isAdmin={isAdmin}
 				/>
 				<Switch>
 					<Route exact path="/">
@@ -64,6 +67,8 @@ const App = () => {
 							setRegisterToken={setRegisterToken}
 							userToken={userToken}
 							setUserToken={setUserToken}
+							isAdmin={isAdmin}
+							setIsAdmin={setIsAdmin}
 						/>
 					</Route>
 
@@ -91,6 +96,8 @@ const App = () => {
 							setRegisterToken={setRegisterToken}
 							userToken={userToken}
 							setUserToken={setUserToken}
+							isAdmin={isAdmin}
+							setIsAdmin={setIsAdmin}
 						/>
 					</Route>
 
@@ -112,6 +119,7 @@ const App = () => {
 							setUserProducts={setUserProducts}
 							productBoard={productBoard}
 							setProductBoard={setProductBoard}
+							isAdmin={isAdmin}
 						/>
 					</Route>
 

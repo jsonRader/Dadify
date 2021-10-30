@@ -4,7 +4,7 @@ import {
     useHistory
 } from 'react-router-dom';
 
-const Header = ({loggedIn, setLoggedIn}) => {
+const Header = ({loggedIn, setLoggedIn, isAdmin}) => {
 
 	const history = useHistory();
 
@@ -23,8 +23,14 @@ const Header = ({loggedIn, setLoggedIn}) => {
 				<Link to="/products" className="navItem">Products</Link>
                 <Link to="/deals" className="navItem">Deals</Link>
 				<Link to="/cart" className="navItem">Cart</Link>
-				<Link to="/admin" className="navItem">Admin</Link>
+				{/* <Link to="/admin" className="navItem">Admin</Link> */}
                 <Link to="/jokes" className="navItem">Joke Book</Link>
+
+				{isAdmin ?
+					<Link to="/admin" className="navItem">Admin</Link>
+					: ''
+				}
+
 				{loggedIn ?
 					<>
 						<Link className="navItem" onClick={logOut}>Log Out</Link>
