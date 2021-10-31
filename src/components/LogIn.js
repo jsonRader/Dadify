@@ -6,7 +6,7 @@ const LogIn = ({username, password, setUsername, setPassword, setUserToken, logg
 	const history = useHistory()
 
 	// console.log('HERE?');
-	
+
 	const logInRequest = async (event) => {
 		event.preventDefault();
 		try {
@@ -33,13 +33,18 @@ const LogIn = ({username, password, setUsername, setPassword, setUserToken, logg
 				localStorage.setItem(`Username`, username);
 				// const user_id = localStorage.getItem('UserId')
 
-				// const cartData = await API.makeRequest(`/cart/${user_id}`, 'GET')
-				// console.log(cartData);
+				const cartData = await API.makeRequest(`/cart/${user_id}`, 'GET')
+				console.log(cartData);
+				localStorage.setItem('cartId', cartData.id);
 				history.push("/");
 			}
 		} catch (error) {
 			console.error(error);
-		}
+		} 
+		// finally {
+		// 	const cartData = await API.makeRequest(`/cart/${user_id}`, 'GET')
+		// 	console.log(cartData);
+		// }
 	};
 	console.log('DATA.ISADMIN:', isAdmin);
 	return (

@@ -2,12 +2,10 @@ import React, {useEffect, useState} from "react";
 import {Link} from 'react-router-dom';
 import API from '../api/api';
 import {FaTimesCircle} from 'react-icons/fa';
-
-import { TextField } from '@material-ui/core';
+import {TextField} from '@material-ui/core';
 import {Button} from '@material-ui/core';
 
-const NewProduct = ({setNewUserProduct, setRender}) => {
-    // const [render, setRender] = useState([]);
+const NewProduct = ({setNewUserProduct, setRender, isAdmin}) => {
     const [newProduct, setNewProduct] = useState({name: '', description: '', price: ''});
 
     function handleChange(event, postKey) {
@@ -29,7 +27,9 @@ const NewProduct = ({setNewUserProduct, setRender}) => {
     }
 
     return (
-        <div className="new-post">
+        <>
+        {isAdmin ?
+            <div className="new-post">
             <form>
                 <FaTimesCircle 
                     style={{color: '#F9DC94', fontSize: '1.5rem', marginLeft:'60rem'}} 
@@ -64,22 +64,113 @@ const NewProduct = ({setNewUserProduct, setRender}) => {
                 </div>
             </form>
         </div>
+        :
+        <>
+        </>
+}
+</>
     )
 }
 
-const ProductBoard = ({productBoard, setProductBoard, loggedIn, isAdmin}) => {
+
+const EditProduct = ({setNewUserProduct, setRender, productBoard, setProductBoard, loggedIn, isAdmin, editProduct, setEditProduct}) => {
+    // const [render, setRender] = useState([]);
+    console.log('PRODUCT BOARD:', productBoard);
+    const [newEditProduct, setNewEditProduct] = useState({name: '', description: '', price: ''});
+
+    function handleChange(event, postKey) {
+        const newState = {...newEditProduct};
+        newState[postKey] = event.target.value;
+        setNewEditProduct(newState);
+    }
+
     const productId = productBoard.id;
-    // const isAdmin = productBoard.isAdmin;
+    console.log('EDIT PRODUCT ID:', productId);
+
+    // const id = product.id;
+
+    async function handleSubmit(event, id) {
+        // console.log('PRODUCT IS:', product);
+        console.log('HERE?');
+        // console.log(id);
+        // event.preventDefault();
+        		try {
+			const data = await API.makeRequest(`/products/${id}`, 'PATCH', newEditProduct);
+			console.log(data);
+            setRender(data);
+		} catch (error) {
+			console.error(error);
+		} finally {
+        setEditProduct(false);
+        setProductBoard(false);
+        }
+    }
+
+    return (
+        <>
+        {isAdmin ?
+            <div className="new-post">
+            <form>
+                <FaTimesCircle 
+                    style={{color: '#F9DC94', fontSize: '1.5rem', marginLeft:'60rem'}} 
+                    onClick={() => setEditProduct(false)}/>
+                <div>
+                    <TextField 
+                        id="add-product"
+                        name='name'
+                        onChange= {(event) => handleChange(event, 'name')}
+                        // placeholder={productBoard.name}
+                        placeholder='Product Name'
+                        required
+                    />
+                    <TextField 
+                        id="add-product"
+                        name='description'
+                        onChange= {(event) => handleChange(event, 'description')}
+                        // placeholder={productBoard.description}
+                        placeholder='Product Description'
+                        multiline="true"
+                        required
+                    />
+                    <TextField 
+                        id="add-product"
+                        name='price'
+                        onChange= {(event) => handleChange(event, 'price')}
+                        // placeholder={productBoard.price}
+                        placeholder="$0.00"
+                        required
+                    />
+                    <Button
+                        id="product-button"
+                        onClick={(e) => handleSubmit(e, productId)}>Confirm Product Updates
+                    </Button>
+                </div>
+            </form>
+        </div>
+        :
+        <>
+        </>
+}
+</>
+    )
+}
+
+const ProductBoard = ({product, productBoard, setProductBoard, loggedIn, isAdmin, setRender, editProduct, setEditProduct}) => {
+    const productId = productBoard.id;
 
 console.log('PRODUCT BOARD', productBoard);
 console.log('PRODUCT ID', productId);
 
-    async function sendToCart(event, productId) {
+const cart_id = localStorage.getItem('cartId');
+
+    async function sendToCart(event, product_id) {
         // event.preventDefault();
+        const quantity = 1;
         try {
-            // await API.makeRequest('/cart_item', 'POST', {cartId, productId, quantity})
-            //PRODUCT ID SENDS
+            await API.makeRequest('/cart_item', 'POST', {cart_id, product_id, quantity})
+
             console.log('PRODUCT ID SENT:', productId);
+            setProductBoard(false);
         } catch (error) {
             throw error
         }
@@ -88,44 +179,72 @@ console.log('PRODUCT ID', productId);
     }
 
     async function deleteProduct(event, id) {
-        // event.preventDefault();
         console.log('DELETE ID IS:', id);
         try {
             const deleteItem = await API.makeRequest(`/products/${id}`, 'DELETE');
             console.log(deleteItem);
+            setProductBoard(false);
         } catch (error) {
             throw error;
+        } finally {
+            setRender(Math.random());
         }
     }
 
+console.log(isAdmin);
     return (
-        <div id="featured-post">
-            <div className="post-inquiry">
-                <button onClick={() => setProductBoard(false)}>CLOSE</button>
+        <div className="featured-product">
+            <div className="product-inquiry">
+            <FaTimesCircle 
+                    style={{marginLeft: '95%', color: '#C41419', fontSize: '1.5rem'}} 
+                    onClick={() => setProductBoard(false)}/>
                 <h1>{productBoard.name}</h1>
-                <p>{productBoard.description}</p>
-                <h4>${productBoard.price}</h4>
+                <h2>{productBoard.description}</h2>
+                <h3>${productBoard.price}</h3>
                 {isAdmin 
                         ? 
-                            <div className="post-messages">
+                            <div>
                                 <div>
-                                <button onClick={(e) => sendToCart(e, productId)}>Add to Cart</button>
+                                    <Button
+                                        id="admin-button" 
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={(e) => sendToCart(e, productId)}>Add to Cart</Button>
                                 </div>
+                                {/* <div className="add-product">
+                {editProduct && <EditProduct setEditProduct={setEditProduct} isAdmin={isAdmin} setRender={setRender}/>}
+            </div> */}
                                 <div>
-                                <button onClick={(e) => deleteProduct(e, productId)}>Delete</button>
+                                    {/* <EditProduct /> */}
+                                    <Button
+                                        id="admin-button" 
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={(e) => {e.preventDefault(); setEditProduct(true); 
+                                            // editProduct(e, productId)
+                                        }}
+                                    >Edit Product</Button>
                                 </div>
-                                <button>Edit Product</button>
+                                    <div className="add-product">
+                                        {editProduct && <EditProduct productBoard={productBoard} setProductBoard={setProductBoard} setEditProduct={setEditProduct} isAdmin={isAdmin} setRender={setRender}/>}
+                                    </div>
+                                <div>
+                                    <Button 
+                                    id="admin-button" 
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={(e) => {deleteProduct(e, productId); setProductBoard(false)}}>Delete</Button>
+                                </div>
                             </div>
                         :
                             <>
-                                {/* <div>
-                                <button onClick={(e) => sendToCart(e, productId)}>Add to Cart</button>
-                                </div>
                                 <div>
-                                <button onClick={(e) => deleteProduct(e, productId)}>Delete</button>
+                                <Button 
+                                    id="visitor-button" 
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={(e) => sendToCart(e, productId)}>Add to Cart</Button>
                                 </div>
-                                <button>Edit Product</button> */}
-                                <button onClick={(e) => sendToCart(e, productId)}>Add to Cart</button>
                             </>
                 }
             </div>
@@ -149,19 +268,7 @@ const UserProduct = ({product, name, description, price, setProductBoard, isAdmi
                     event.preventDefault();
                     setProductBoard(product);
                     }}>View More
-                </Button>            
-            {isAdmin 
-                ?
-                    <>
-                        <button
-                            onClick={(event) => {
-                                deleteProduct(event, productId);
-                            }}>Delete Product
-                        </button> 
-                    </>
-                :
-                    ''
-            }
+                </Button>
             </div>
         </div>
     )
@@ -185,9 +292,12 @@ const Products = ({
     userProducts, 
     setUserProducts, 
     productBoard, 
-    setProductBoard
+    setProductBoard,
+    isAdmin,
+    // setRender
 }) => {
     const [newUserProduct, setNewUserProduct] = useState(false);
+    const [editProduct, setEditProduct] = useState(false);
     const [search, setSearch] = useState('')
 
     const [render, setRender] = useState([]);
@@ -218,7 +328,7 @@ const Products = ({
                     search={search}
                     setSearch={setSearch}
                 />
-                {loggedIn && <Button id="product-button"
+                {isAdmin && <Button id="product-button"
                 onClick={(event) => {
                                      event.preventDefault();
                                      setNewUserProduct(true)}}>
@@ -227,7 +337,7 @@ const Products = ({
                 }
             </div>
             <div className="add-product">
-                {newUserProduct && <NewProduct setNewUserProduct={setNewUserProduct} setRender={setRender}/>}
+                {newUserProduct && <NewProduct setNewUserProduct={setNewUserProduct} isAdmin={isAdmin} setRender={setRender}/>}
             </div>
             <div className="products">
 
@@ -257,6 +367,10 @@ const Products = ({
                     productBoard={productBoard}
                     setProductBoard={setProductBoard}
                     loggedIn={loggedIn}
+                    isAdmin={isAdmin}
+                    editProduct={editProduct}
+                    setEditProduct={setEditProduct}
+                    setRender={setRender}
                 />
             }       
         </div>
