@@ -2,7 +2,7 @@ export {default as Header} from './Header';
 export {default as Home} from './Home';
 export {default as Admin} from './Admin';
 export {default as Cart} from './Cart';
-export {default as Deals} from './Deals';
+// export {default as Deals} from './Deals';
 export {default as Jokes} from './Jokes';
 export {default as LogIn} from './LogIn';
 export {default as Message} from './Message';

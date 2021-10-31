@@ -52,6 +52,9 @@ const Home = ({username, password, setUsername, setPassword, setUserToken, logge
 
 				// const cartData = await API.makeRequest(`/cart/${user_id}`, 'GET')
 				// console.log(cartData);
+				const cartData = await API.makeRequest(`/cart/${user_id}`, 'GET')
+				console.log(cartData);
+				localStorage.setItem('cartId', cartData.id);
 				history.push("/");
 			}
 		} catch (error) {

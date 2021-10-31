@@ -21,7 +21,7 @@ const Header = ({loggedIn, setLoggedIn, isAdmin}) => {
 			<div id="nav-bar">
                 <Link to="/" className="navItem">Home</Link>
 				<Link to="/products" className="navItem">Products</Link>
-                <Link to="/deals" className="navItem">Deals</Link>
+                {/* <Link to="/deals" className="navItem">Deals</Link> */}
 				<Link to="/cart" className="navItem">Cart</Link>
 				{/* <Link to="/admin" className="navItem">Admin</Link> */}
                 <Link to="/jokes" className="navItem">Joke Book</Link>
