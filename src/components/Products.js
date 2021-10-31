@@ -74,7 +74,79 @@ const NewProduct = ({setNewUserProduct, setRender, isAdmin}) => {
     )
 }
 
-const ProductBoard = ({productBoard, setProductBoard, loggedIn, isAdmin, setRender}) => {
+
+const EditProduct = ({setNewUserProduct, setRender, productBoard, setProductBoard, loggedIn, isAdmin, editProduct, setEditProduct}) => {
+    // const [render, setRender] = useState([]);
+    const [newEditProduct, setNewEditProduct] = useState({name: '', description: '', price: ''});
+
+    function handleChange(event, postKey) {
+        const newState = {...newEditProduct};
+        newState[postKey] = event.target.value;
+        setNewEditProduct(newState);
+    }
+
+    async function handleSubmit(event) {
+        event.preventDefault();
+        		try {
+			const data = await API.makeRequest(`/products/${id}`, 'PATCH', newEditProduct);
+			console.log(data);
+            setRender(data);
+		} catch (error) {
+			console.error(error);
+		}
+        setEditProduct(false);
+    }
+
+    return (
+        <>
+        {isAdmin ?
+            <div className="new-post">
+            <form>
+                <FaTimesCircle 
+                    style={{color: '#F9DC94', fontSize: '1.5rem', marginLeft:'60rem'}} 
+                    onClick={() => setEditProduct(false)}/>
+                <div>
+                    <TextField 
+                        id="add-product"
+                        name='name'
+                        onChange= {(event) => handleChange(event, 'name')}
+                        // placeholder={productBoard.name}
+                        placeholder='Product Name'
+                        required
+                    />
+                    <TextField 
+                        id="add-product"
+                        name='description'
+                        onChange= {(event) => handleChange(event, 'description')}
+                        // placeholder={productBoard.description}
+                        placeholder='Product Description'
+                        multiline="true"
+                        required
+                    />
+                    <TextField 
+                        id="add-product"
+                        name='price'
+                        onChange= {(event) => handleChange(event, 'price')}
+                        // placeholder={productBoard.price}
+                        placeholder="$0.00"
+                        required
+                    />
+                    <Button
+                        id="product-button"
+                        onClick={handleSubmit}>Edit Product
+                    </Button>
+                </div>
+            </form>
+        </div>
+        :
+        <>
+        </>
+}
+</>
+    )
+}
+
+const ProductBoard = ({productBoard, setProductBoard, loggedIn, isAdmin, setRender, editProduct, setEditProduct}) => {
     const productId = productBoard.id;
     // const isAdmin = productBoard.isAdmin;
 
@@ -105,6 +177,8 @@ console.log('PRODUCT ID', productId);
             throw error;
         }
     }
+
+    // async function editProduct
 console.log(isAdmin);
     return (
         <div className="featured-product">
@@ -126,12 +200,17 @@ console.log(isAdmin);
                                         onClick={(e) => sendToCart(e, productId)}>Add to Cart</Button>
                                 </div>
                                 <div>
+                                    <EditProduct />
                                     <Button
                                         id="admin-button" 
                                         variant="contained"
                                         color="secondary"
+                                        onClick={(e) => {e.preventDefault(); setEditProduct(true)}}
                                     >Edit Product</Button>
                                 </div>
+                                    <div className="add-product">
+                {editProduct && <EditProduct setEditProduct={setEditProduct} isAdmin={isAdmin} setRender={setRender}/>}
+            </div>
                                 <div>
                                     <Button 
                                     id="admin-button" 
@@ -201,6 +280,7 @@ const Products = ({
     // setRender
 }) => {
     const [newUserProduct, setNewUserProduct] = useState(false);
+    const [editProduct, setEditProduct] = useState(false);
     const [search, setSearch] = useState('')
 
     const [render, setRender] = useState([]);
@@ -271,6 +351,8 @@ const Products = ({
                     setProductBoard={setProductBoard}
                     loggedIn={loggedIn}
                     isAdmin={isAdmin}
+                    editProduct={editProduct}
+                    setEditProduct={setEditProduct}
                     setRender={setRender}
                 />
             }       
