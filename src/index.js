@@ -16,7 +16,7 @@ import {
 	Admin,
 	AdminUsers,
 	Cart,
-	Deals,
+	// Deals,
 	Jokes,
 	Message,
 	Products,
@@ -135,9 +135,9 @@ const App = () => {
 						/>
 					</Route>  */}
 
-					<Route path="/deals">
+					{/* <Route path="/deals">
 						<Deals />
-					</Route>
+					</Route> */}
 
 					<Route path="/jokes">
 						<Jokes />
