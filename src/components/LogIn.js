@@ -35,11 +35,16 @@ const LogIn = ({username, password, setUsername, setPassword, setUserToken, logg
 
 				const cartData = await API.makeRequest(`/cart/${user_id}`, 'GET')
 				console.log(cartData);
+				localStorage.setItem('cartId', cartData.id);
 				history.push("/");
 			}
 		} catch (error) {
 			console.error(error);
-		}
+		} 
+		// finally {
+		// 	const cartData = await API.makeRequest(`/cart/${user_id}`, 'GET')
+		// 	console.log(cartData);
+		// }
 	};
 	console.log('DATA.ISADMIN:', isAdmin);
 	return (

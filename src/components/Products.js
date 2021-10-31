@@ -2,12 +2,10 @@ import React, {useEffect, useState} from "react";
 import {Link} from 'react-router-dom';
 import API from '../api/api';
 import {FaTimesCircle} from 'react-icons/fa';
-
-import { TextField } from '@material-ui/core';
+import {TextField} from '@material-ui/core';
 import {Button} from '@material-ui/core';
 
 const NewProduct = ({setNewUserProduct, setRender, isAdmin}) => {
-    // const [render, setRender] = useState([]);
     const [newProduct, setNewProduct] = useState({name: '', description: '', price: ''});
 
     function handleChange(event, postKey) {
@@ -77,6 +75,7 @@ const NewProduct = ({setNewUserProduct, setRender, isAdmin}) => {
 
 const EditProduct = ({setNewUserProduct, setRender, productBoard, setProductBoard, loggedIn, isAdmin, editProduct, setEditProduct}) => {
     // const [render, setRender] = useState([]);
+    console.log('PRODUCT BOARD:', productBoard);
     const [newEditProduct, setNewEditProduct] = useState({name: '', description: '', price: ''});
 
     function handleChange(event, postKey) {
@@ -85,16 +84,26 @@ const EditProduct = ({setNewUserProduct, setRender, productBoard, setProductBoar
         setNewEditProduct(newState);
     }
 
-    async function handleSubmit(event) {
-        event.preventDefault();
+    const productId = productBoard.id;
+    console.log('EDIT PRODUCT ID:', productId);
+
+    // const id = product.id;
+
+    async function handleSubmit(event, id) {
+        // console.log('PRODUCT IS:', product);
+        console.log('HERE?');
+        // console.log(id);
+        // event.preventDefault();
         		try {
 			const data = await API.makeRequest(`/products/${id}`, 'PATCH', newEditProduct);
 			console.log(data);
             setRender(data);
 		} catch (error) {
 			console.error(error);
-		}
+		} finally {
         setEditProduct(false);
+        setProductBoard(false);
+        }
     }
 
     return (
@@ -133,7 +142,7 @@ const EditProduct = ({setNewUserProduct, setRender, productBoard, setProductBoar
                     />
                     <Button
                         id="product-button"
-                        onClick={handleSubmit}>Edit Product
+                        onClick={(e) => handleSubmit(e, productId)}>Confirm Product Updates
                     </Button>
                 </div>
             </form>
@@ -146,19 +155,22 @@ const EditProduct = ({setNewUserProduct, setRender, productBoard, setProductBoar
     )
 }
 
-const ProductBoard = ({productBoard, setProductBoard, loggedIn, isAdmin, setRender, editProduct, setEditProduct}) => {
+const ProductBoard = ({product, productBoard, setProductBoard, loggedIn, isAdmin, setRender, editProduct, setEditProduct}) => {
     const productId = productBoard.id;
-    // const isAdmin = productBoard.isAdmin;
 
 console.log('PRODUCT BOARD', productBoard);
 console.log('PRODUCT ID', productId);
 
-    async function sendToCart(event, productId) {
+const cart_id = localStorage.getItem('cartId');
+
+    async function sendToCart(event, product_id) {
         // event.preventDefault();
+        const quantity = 1;
         try {
-            // await API.makeRequest('/cart_item', 'POST', {cartId, productId, quantity})
-            //PRODUCT ID SENDS
+            await API.makeRequest('/cart_item', 'POST', {cart_id, product_id, quantity})
+
             console.log('PRODUCT ID SENT:', productId);
+            setProductBoard(false);
         } catch (error) {
             throw error
         }
@@ -167,18 +179,18 @@ console.log('PRODUCT ID', productId);
     }
 
     async function deleteProduct(event, id) {
-        // event.preventDefault();
         console.log('DELETE ID IS:', id);
         try {
             const deleteItem = await API.makeRequest(`/products/${id}`, 'DELETE');
             console.log(deleteItem);
-            setRender(Math.random());
+            setProductBoard(false);
         } catch (error) {
             throw error;
+        } finally {
+            setRender(Math.random());
         }
     }
 
-    // async function editProduct
 console.log(isAdmin);
     return (
         <div className="featured-product">
@@ -199,24 +211,29 @@ console.log(isAdmin);
                                         color="secondary"
                                         onClick={(e) => sendToCart(e, productId)}>Add to Cart</Button>
                                 </div>
+                                {/* <div className="add-product">
+                {editProduct && <EditProduct setEditProduct={setEditProduct} isAdmin={isAdmin} setRender={setRender}/>}
+            </div> */}
                                 <div>
-                                    <EditProduct />
+                                    {/* <EditProduct /> */}
                                     <Button
                                         id="admin-button" 
                                         variant="contained"
                                         color="secondary"
-                                        onClick={(e) => {e.preventDefault(); setEditProduct(true)}}
+                                        onClick={(e) => {e.preventDefault(); setEditProduct(true); 
+                                            // editProduct(e, productId)
+                                        }}
                                     >Edit Product</Button>
                                 </div>
                                     <div className="add-product">
-                {editProduct && <EditProduct setEditProduct={setEditProduct} isAdmin={isAdmin} setRender={setRender}/>}
-            </div>
+                                        {editProduct && <EditProduct productBoard={productBoard} setProductBoard={setProductBoard} setEditProduct={setEditProduct} isAdmin={isAdmin} setRender={setRender}/>}
+                                    </div>
                                 <div>
                                     <Button 
                                     id="admin-button" 
                                     variant="contained"
                                     color="secondary"
-                                    onClick={(e) => deleteProduct(e, productId)}>Delete</Button>
+                                    onClick={(e) => {deleteProduct(e, productId); setProductBoard(false)}}>Delete</Button>
                                 </div>
                             </div>
                         :
