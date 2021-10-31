@@ -77,7 +77,7 @@ const LogIn = ({username, password, setUsername, setPassword, setUserToken, logg
 						</form>
 					</div>
 					<div className="buttonContainer">
-						<button className="loginButton" onClick={logInRequest}>Log In</button>
+						<button className="loginButton" onClick={(e) => logInRequest(e)}>Log In</button>
 					</div>
 					<div className="signUpSection">
 						<p> Don't have an account? </p>

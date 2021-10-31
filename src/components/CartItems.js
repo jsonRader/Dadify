@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react';
 import {
@@ -7,10 +8,14 @@ import API from '../api/api';
 
 const CartItems = ({cartId, id, name, price, productId, itemQuantity, setRender}) => {
     const [updateQuantity, setUpdateQuantity] = useState({quantity: itemQuantity});
-    async function updateItemQuantity(e) {
+    const [editItem, setEditItem] = useState(false);
+    function updateItemQuantity(e) {
         setUpdateQuantity({quantity: Number(e.target.value)})
         console.log(updateQuantity);
         console.log(id);
+    }
+
+    async function submitEdit(e) {
         try {
             const data = await API.makeRequest(`/cart_item/${id}`, 'PATCH', updateQuantity);
             console.log(data);
@@ -18,6 +23,7 @@ const CartItems = ({cartId, id, name, price, productId, itemQuantity, setRender}
             throw error;
         } finally {
             setRender(updateQuantity.quantity);
+            setEditItem(false);
         }
     }
 
@@ -33,11 +39,20 @@ const CartItems = ({cartId, id, name, price, productId, itemQuantity, setRender}
     }
     return (
         <div className='cart-item'>
-            <h3>Name: {name}</h3>
-            <h4>Price: {price}</h4>
-            <h5>Quantity: <input defaultValue={itemQuantity} type='number' onChange={(e) => updateItemQuantity(e)}></input></h5>
+            <h2>Name: {name}</h2>
+            <br></br>
+            <h3>Price: {price}</h3>
+            {
+                editItem ?
+                <>
+                <h3>Quantity: <input type='number' defaultValue={itemQuantity} onChange={(e) => updateItemQuantity(e)}></input></h3>
+                <Button id='cart-button' style={{marginRight:'2px'}} onClick={(e) => submitEdit(e)}>Update</Button><Button id='cart-button' style={{marginLeft: '2px'}} onClick={() => setEditItem(false)}>Cancel</Button>
+                </>
+                :
+                <h3>Quantity: {itemQuantity}<Button style={{marginLeft: '6px', marginBottom: '18px'}} id='cart-button' onClick={() => setEditItem(true)}>Change</Button></h3>
+            }
             <div>
-                <button onClick={(e) => removeItem(e)}>Remove Item</button>
+                <Button id='cart-button' onClick={(e) => removeItem(e)}>Remove Item</Button>
             </div>
         </div>
     )
