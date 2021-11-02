@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import {useHistory, Link} from 'react-router-dom';
-import api from '../api/api';
+import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
+import API from '../api/api';
 
 const Admin = (username) => {
-
 	const [user, setUser] = useState([]);
 
 	const userSearchRequest = async (event) => {
 		event.preventDefault();
 		try {
-			const data = await api.makeRequest(`/users/${username}`);
+			const data = await API.makeRequest(`/users/${username}`);
 			setUser(data)
 			return user;
 		} catch (error) {

@@ -9,9 +9,6 @@ export default {
             method,
             headers: defaultHeaders
         }
-        if (data) {
-            options.body = JSON.stringify(data);
-        }
         console.log(BASE_URL + path);
         console.log(options);
         const response = await fetch(BASE_URL + path, options);
