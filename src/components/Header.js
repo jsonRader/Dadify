@@ -10,7 +10,8 @@ const Header = ({loggedIn, setLoggedIn, isAdmin}) => {
 		localStorage.removeItem('cartId');
 		localStorage.removeItem('UserId');
 		localStorage.removeItem('Username');
-		setLoggedIn(null);
+		localStorage.removeItem('Admin');
+		setLoggedIn(false);
 		history.push('/')
 	}
 

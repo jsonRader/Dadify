@@ -27,7 +27,7 @@ const LogIn = ({
 				const token = data.token;
 				const user_id = data.id;
 				localStorage.removeItem("NonUserCart");
-				// const isAdmin = data.isAdmin
+				localStorage.setItem('Admin', data.isAdmin);
 
 				localStorage.setItem(`Token`, token);
 				setUserToken(token);

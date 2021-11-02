@@ -45,6 +45,10 @@ const App = () => {
 			? setLoggedIn(true) 
 			: setLoggedIn(false)
 		};
+		{localStorage.getItem('Admin')
+			? setIsAdmin(true)
+			: setIsAdmin(false);
+		}
 	}, []);
 
 	useEffect(() => {

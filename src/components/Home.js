@@ -47,6 +47,7 @@ const Home = ({username, password, setUsername, setPassword, setUserToken, logge
 				setUsername(username);
 				localStorage.setItem(`UserId`, user_id);
 				localStorage.setItem(`Username`, username);
+				localStorage.setItem('Admin', data.isAdmin);
 				// const cartData = await API.makeRequest(`/cart/${user_id}`, 'GET')
 				// console.log(cartData);
 				localStorage.setItem('cartId', data.cart.id);
