@@ -4,7 +4,7 @@ import API from '../api/api';
 import {Button} from '@material-ui/core';
 
 
-const CartItems = ({cartId, id, name, price, productId, itemQuantity, setRender, loggedIn}) => {
+const CartItems = ({cartId, id, name, price, productId, itemQuantity, setRender, loggedIn, index}) => {
 
     const [updateQuantity, setUpdateQuantity] = useState({quantity: itemQuantity});
     const [editItem, setEditItem] = useState(false);
@@ -17,19 +17,34 @@ const CartItems = ({cartId, id, name, price, productId, itemQuantity, setRender,
 
     async function submitEdit(e) {
         try {
-            const data = await API.makeRequest(`/cart_item/${id}`, 'PATCH', updateQuantity);
+            if(loggedIn) {
+                const data = await API.makeRequest(`/cart_item/${id}`, 'PATCH', updateQuantity);
+                setRender(updateQuantity.quantity);
+            } else {
+                itemQuantity = updateQuantity;
+                const non_User = JSON.parse(localStorage.getItem("NonUserCart"));
+                non_User.items[index].quantity = updateQuantity.quantity;
+                localStorage.setItem("NonUserCart", JSON.stringify(non_User));
+            }
+            
             // console.log(data);
         } catch (error) {
             throw error;
         } finally {
-            setRender(updateQuantity.quantity);
             setEditItem(false);
+            setRender(updateQuantity.quantity);
         }
     }
 
     async function removeItem(e) {
         try {
-            const deleteItem = await API.makeRequest(`/cart_item/${id}`, 'DELETE');
+            if(loggedIn) {
+                const deleteItem = await API.makeRequest(`/cart_item/${id}`, 'DELETE');
+            } else {
+                const nonUserCart = JSON.parse(localStorage.getItem("NonUserCart"));
+                nonUserCart.items.splice(index, 1);
+                localStorage.setItem("NonUserCart", JSON.stringify(nonUserCart));
+            }
             // console.log(deleteItem);
         } catch (error) {
             throw error;

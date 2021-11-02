@@ -154,8 +154,7 @@ const EditProduct = ({setRender, productBoard, setProductBoard, isAdmin, setEdit
 }
 
 const ProductBoard = ({
-    loggedIn,
-    productBoard, setProductBoard,
+    productBoard, setProductBoard,loggedIn,
     editProduct, setEditProduct,
     isAdmin, setRender
 }) => {
