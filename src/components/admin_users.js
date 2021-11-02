@@ -1,15 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {
-    Link
-} from 'react-router-dom';
-import api from '../api/api';
+import {Link} from 'react-router-dom';
+import API from '../api/api';
 
 const AdminUsers = () => {
     const [users, setUsers] = useState([]);
 
     useEffect( async function() {
         try {
-            const data = await api.makeRequest('/users', 'GET');
+            const data = await API.makeRequest('/users', 'GET');
             setUsers(data);
         } catch (error) {
             throw error;
@@ -19,9 +17,10 @@ const AdminUsers = () => {
     return (
         <div id="userList">
             <h1>Current site users</h1>
-            <div><Link to="/admin">Back to main admin page</Link></div>
+            <div>
+                <Link to="/admin">Back to main admin page</Link>
+            </div>
             <Link to="/">Back to Home</Link>
-
             <div>
                 {users.map((user, id) => {
                     return (
@@ -37,7 +36,6 @@ const AdminUsers = () => {
             </div>
         </div>
     )
-
 }
 
 export default AdminUsers
