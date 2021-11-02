@@ -252,7 +252,7 @@ const ProductBoard = ({
     )
 }
 
-const UserProduct = ({product, name, description, price, setProductBoard}) => {
+const UserProduct = ({product, image, name, description, price, setProductBoard}) => {
     // console.log(product);
     // console.log(image);
 
@@ -260,7 +260,7 @@ const UserProduct = ({product, name, description, price, setProductBoard}) => {
         <div className="product-card">
             <div className="product-data">
                 <h1>{name}</h1>
-                <img className="product-picture" src="./product_images/oakley_sunglasses.jpeg" />
+                <img className="product-picture" src={(`${process.env.PUBLIC_URL}/product_images/${image}`)} />
                 <h2>{description}</h2>
                 <h3>${price}</h3>
                 <Button
