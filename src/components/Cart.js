@@ -31,8 +31,17 @@ const Cart = ({loggedIn}) => {
 
 	async function checkout(e) {
 		try {
-			setConfirmation(true);
-			await API.makeRequest(`/cart_item/clear_cart/${cart.id}`, 'DELETE');
+			if(loggedIn) {
+				setConfirmation(true);
+				await API.makeRequest(`/cart_item/clear_cart/${cart.id}`, 'DELETE');
+			} else {
+				setConfirmation(true);
+				const emptyCart = {
+					total: 0.00,
+					items: []
+				};
+				localStorage.setItem("NonUserCart", JSON.stringify(emptyCart));
+			}
 		} catch (error) {
 			throw error;
 		}
@@ -62,6 +71,7 @@ const Cart = ({loggedIn}) => {
 							  price={item.price}
 							  itemQuantity={item.quantity}
 							  key={i}
+							  index={i}
 							  setRender={setRender}
 							  loggedIn={loggedIn}/>
 		});
