@@ -47,7 +47,7 @@ const Register = ({
 				setconfirmPassword("");
 				setRegisterToken(token);
 				await API.makeRequest('/users/login', 'POST', user)
-				history.push('/');
+				history.push('/login');
 				// console.log(cartData);
 			} else {
 				alert(data.message)
