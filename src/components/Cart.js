@@ -7,7 +7,7 @@ import {
 import API from '../api/api';
 import CartItems from './CartItems';
 
-const Cart = () => {
+const Cart = ({loggedIn}) => {
 
 	const history = useHistory();
 	const [cart, setCart] = useState([]);
@@ -17,12 +17,19 @@ const Cart = () => {
 	useEffect( async function() {
 		try {
 			// const username = localStorage.getItem('username');
-			const data = await API.makeRequest(`/cart/${user_id}`, 'GET');
-			setCart(data);
+			if(loggedIn) {
+				const data = await API.makeRequest(`/cart/${user_id}`, 'GET');
+				setCart(data);
+			} else {
+				const nonUser = JSON.parse(localStorage.getItem('NonUserCart'));
+				setCart(nonUser);
+				console.log(cart)
+			}
 		} catch (error) {
 			throw error;
 		} 
 	}, [render]);
+
 
 	async function checkout(e) {
 		try {
@@ -54,7 +61,8 @@ const Cart = () => {
 							  price={item.price}
 							  itemQuantity={item.quantity}
 							  key={i}
-							  setRender={setRender}/>
+							  setRender={setRender}
+							  loggedIn={loggedIn}/>
 		});
 	}
 

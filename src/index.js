@@ -47,6 +47,14 @@ const App = () => {
 		};
 	}, []);
 
+	useEffect(() => {
+		const nonUserCart = {
+            total: 0.00,
+            items: []
+        }
+        localStorage.setItem("NonUserCart", JSON.stringify(nonUserCart));
+	}, [loggedIn]);
+
 	return (
 		<>
 			<div className="app">
@@ -110,7 +118,7 @@ const App = () => {
 					</Route>
 
 					<Route path="/cart">
-						<Cart />
+						<Cart loggedIn={loggedIn}/>
 					</Route>
 					<Route path="/products">
 						<Products 

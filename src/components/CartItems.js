@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import API from '../api/api';
 
-const CartItems = ({cartId, id, name, price, productId, itemQuantity, setRender}) => {
+const CartItems = ({cartId, id, name, price, productId, itemQuantity, setRender, loggedIn}) => {
     const [updateQuantity, setUpdateQuantity] = useState({quantity: itemQuantity});
     const [editItem, setEditItem] = useState(false);
     function updateItemQuantity(e) {

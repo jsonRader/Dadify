@@ -11,6 +11,9 @@ const Header = ({loggedIn, setLoggedIn, isAdmin}) => {
 	function logOut(event) {
 		event.preventDefault();
 		localStorage.removeItem('Token')
+		localStorage.removeItem('cartId');
+		localStorage.removeItem('UserId');
+		localStorage.removeItem('Username');
 		setLoggedIn(null);
 		history.push('/')
 	}

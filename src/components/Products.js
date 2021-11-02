@@ -161,12 +161,21 @@ const ProductBoard = ({product, productBoard, setProductBoard, loggedIn, isAdmin
 console.log('PRODUCT BOARD', productBoard);
 console.log('PRODUCT ID', productId);
 
-const cart_id = localStorage.getItem('cartId');
+    const cart_id = localStorage.getItem('cartId');
 
     async function sendToCart(event, product_id) {
         // event.preventDefault();
         const quantity = 1;
         try {
+            if(!loggedIn) {
+                const non_userCart = JSON.parse(localStorage.getItem('NonUserCart'));
+                console.log(non_userCart);
+                productBoard["quantity"] = 1;
+                non_userCart.items.push(productBoard);
+                localStorage.setItem("NonUserCart", JSON.stringify(non_userCart));
+                setProductBoard(false);
+                return;
+            }
             await API.makeRequest('/cart_item', 'POST', {cart_id, product_id, quantity})
 
             console.log('PRODUCT ID SENT:', productId);
