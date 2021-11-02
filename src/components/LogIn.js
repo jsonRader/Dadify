@@ -6,8 +6,7 @@ const LogIn = ({
 	username, password, 
 	setUsername, setPassword, 
 	loggedIn, setLoggedIn, 
-	isAdmin, setIsAdmin,
-	setUserToken
+	setIsAdmin, setUserToken
 }) => {
 	const history = useHistory()
 
@@ -16,27 +15,21 @@ const LogIn = ({
 		try {
 			const user = {username, password};
 			const data = await API.makeRequest('/users/login', 'POST', user);
-			// console.log(data);
-
 			setIsAdmin(data.isAdmin);
 
 			if (data.error) {
 				history.push("/message");
-
 			} else {
 				const token = data.token;
 				const user_id = data.id;
 				localStorage.removeItem("NonUserCart");
 				localStorage.setItem('Admin', data.isAdmin);
-
 				localStorage.setItem(`Token`, token);
 				setUserToken(token);
 				setLoggedIn(true);
 				setUsername(username);
 				localStorage.setItem(`UserId`, user_id);
 				localStorage.setItem(`Username`, username);
-				// const cartData = await API.makeRequest(`/cart/${user_id}`, 'GET')
-				// console.log(cartData);
 				localStorage.setItem('cartId', data.cart.id);
 				history.push("/");
 			}
@@ -44,7 +37,7 @@ const LogIn = ({
 			console.error(error);
 		} 
 	};
-	// console.log('DATA.ISADMIN:', isAdmin);
+
 	return (
 		<>
 			{loggedIn ?

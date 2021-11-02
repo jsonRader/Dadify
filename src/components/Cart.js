@@ -14,7 +14,6 @@ const Cart = ({loggedIn}) => {
 
 	useEffect(async function() {
 		try {
-			// const username = localStorage.getItem('username');
 			if(loggedIn) {
 				const data = await API.makeRequest(`/cart/${user_id}`, 'GET');
 				setCart(data);
@@ -63,17 +62,21 @@ const Cart = ({loggedIn}) => {
 		});
 
 		total = total.toFixed(2);
-		cartItemElements = cart.items.map((item, i) => {
 
-			return <CartItems cartId={item.cart_id}
-							  id={item.id}
-							  name={item.name}
-							  price={item.price}
-							  itemQuantity={item.quantity}
-							  key={i}
-							  index={i}
-							  setRender={setRender}
-							  loggedIn={loggedIn}/>
+		cartItemElements = cart.items.map((item, i) => {
+			return (
+				<CartItems 
+					cartId={item.cart_id}
+					id={item.id}
+					name={item.name}
+					price={item.price}
+					itemQuantity={item.quantity}
+					key={i}
+					index={i}
+					setRender={setRender}
+					loggedIn={loggedIn}
+				/>
+			)
 		});
 	}
 
@@ -81,7 +84,6 @@ const Cart = ({loggedIn}) => {
 		const updatedData = {total: total}
 		try {
 			const data = await API.makeRequest(`/cart/${user_id}`, 'PATCH', updatedData);
-			// console.log(data);
 		} catch (error) {
 			throw error;
 		}
@@ -90,8 +92,7 @@ const Cart = ({loggedIn}) => {
 	return (
 		<div id="cart">
 			<div className='cart-header'>
-				<h1>For The Shopping Cart</h1>
-				<Link to="/">Back to Home</Link>
+				<h1>Your Shopping Cart</h1>
 			</div>
 			<div className='cart-items'>
 				{cart.items ?
@@ -116,6 +117,7 @@ const Cart = ({loggedIn}) => {
 					<div className='confirmation-content'>
 						<h2>Order Confirmed!</h2>
 						<Button 
+							style={{background: '#C41419', color: '#F9DC94', marginTop: '40px', width: '300px'}}
 							onClick={(e) => backToHome(e)}
 						>Return to Home</Button>
 					</div>

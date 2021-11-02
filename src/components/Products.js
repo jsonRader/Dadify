@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {Link} from 'react-router-dom';
 import API from '../api/api';
 import {FaTimesCircle} from 'react-icons/fa';
 import {TextField} from '@material-ui/core';
@@ -18,7 +17,6 @@ const NewProduct = ({setNewUserProduct, setRender, isAdmin}) => {
         e.preventDefault();
         try {
 			const data = await API.makeRequest('/products', 'POST', newProduct);
-			// console.log(data);
             setRender(data);
 		} catch (error) {
 			console.error(error);
@@ -74,7 +72,6 @@ const NewProduct = ({setNewUserProduct, setRender, isAdmin}) => {
 }
 
 const EditProduct = ({setRender, productBoard, setProductBoard, isAdmin, setEditProduct}) => {
-    // console.log('PRODUCT BOARD:', productBoard);
     const [newEditProduct, setNewEditProduct] = useState({name: '', description: '', price: ''});
 
     function handleChange(e, postKey) {
@@ -84,15 +81,10 @@ const EditProduct = ({setRender, productBoard, setProductBoard, isAdmin, setEdit
     }
 
     const productId = productBoard.id;
-    // console.log('EDIT PRODUCT ID:', productId);
 
     async function handleSubmit(id) {
-        // console.log('PRODUCT IS:', product);
-        // console.log(id);
-        // event.preventDefault();
         try {
 			const data = await API.makeRequest(`/products/${id}`, 'PATCH', newEditProduct);
-			// console.log(data);
             setRender(data);
 		} catch (error) {
 			console.error(error);
@@ -116,7 +108,6 @@ const EditProduct = ({setRender, productBoard, setProductBoard, isAdmin, setEdit
                                 id="add-product"
                                 name='name'
                                 onChange= {(event) => handleChange(event, 'name')}
-                                // placeholder={productBoard.name}
                                 placeholder='Product Name'
                                 required
                             />
@@ -124,7 +115,6 @@ const EditProduct = ({setRender, productBoard, setProductBoard, isAdmin, setEdit
                                 id="add-product"
                                 name='description'
                                 onChange= {(event) => handleChange(event, 'description')}
-                                // placeholder={productBoard.description}
                                 placeholder='Product Description'
                                 multiline="true"
                                 required
@@ -133,7 +123,6 @@ const EditProduct = ({setRender, productBoard, setProductBoard, isAdmin, setEdit
                                 id="add-product"
                                 name='price'
                                 onChange= {(event) => handleChange(event, 'price')}
-                                // placeholder={productBoard.price}
                                 placeholder="$0.00"
                                 required
                             />
@@ -160,8 +149,6 @@ const ProductBoard = ({
     isAdmin, setRender
 }) => {
     const productId = productBoard.id;
-    console.log('PRODUCT BOARD', productBoard);
-    console.log('PRODUCT ID', productId);
     const cart_id = localStorage.getItem('cartId');
 
     async function sendToCart(e, product_id) {
@@ -170,14 +157,12 @@ const ProductBoard = ({
         try {
             if(!loggedIn) {
                 const non_userCart = JSON.parse(localStorage.getItem('NonUserCart'));
-                console.log(non_userCart);
                 productBoard["quantity"] = 1;
                 non_userCart.items.push(productBoard);
                 localStorage.setItem("NonUserCart", JSON.stringify(non_userCart));
                 setProductBoard(false);
                 return;
             }
-            console.log('PRODUCT ID SENT:', productId);
             await API.makeRequest('/cart_item', 'POST', itemData);
             setProductBoard(false);
         } catch (error) {
@@ -186,10 +171,8 @@ const ProductBoard = ({
     }
 
     async function deleteProduct(e, id) {
-        // console.log('DELETE ID IS:', id);
         try {
-            const deleteItem = await API.makeRequest(`/products/${id}`, 'DELETE');
-            // console.log(deleteItem);
+            await API.makeRequest(`/products/${id}`, 'DELETE');
             setProductBoard(false);
         } catch (error) {
             throw error;
@@ -198,7 +181,6 @@ const ProductBoard = ({
         }
     }
 
-    // console.log(isAdmin);
     return (
         <div className="featured-product">
             <div className="product-inquiry">
@@ -263,8 +245,6 @@ const ProductBoard = ({
 }
 
 const UserProduct = ({product, image, name, description, price, setProductBoard}) => {
-    // console.log(product);
-    // console.log(image);
 
     return (
         <div className="product-card">

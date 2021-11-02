@@ -6,7 +6,6 @@ import Dad_Joke_Book from '../images/Dad_Joke_Book.svg';
 import {Button} from '@material-ui/core';
 
 const Home = ({username, password, setUsername, setPassword, setUserToken, loggedIn, setLoggedIn, setIsAdmin}) => {
-
 	const [dadJoke, setDadJoke] = useState("");
 	const [loadingJoke, setLoadingJoke] = useState(true);
 	const [fetchingDadJoke, setFetchingDadJoke] = useState(false);
@@ -15,7 +14,6 @@ const Home = ({username, password, setUsername, setPassword, setUserToken, logge
 		const fetchData = async () => {
 			setLoadingJoke(true);
 			const result = await axios("https://us-central1-dadsofunny.cloudfunctions.net/DadJokes/random/type/general");
-			// console.log(result.data);
 			setDadJoke(`${result.data[0].setup} ${result.data[0].punchline}`);
 			setLoadingJoke(false);
 		};
@@ -31,13 +29,10 @@ const Home = ({username, password, setUsername, setPassword, setUserToken, logge
 		try {
 			const user = {username, password};
 			const data = await API.makeRequest('/users/login', 'POST', user);
-			// console.log(data);
-
 			setIsAdmin(data.isAdmin);
 
 			if (data.error) {
 				history.push("/message");
-
 			} else {
 				const token = data.token;
 				const user_id = data.id;
@@ -48,8 +43,6 @@ const Home = ({username, password, setUsername, setPassword, setUserToken, logge
 				localStorage.setItem(`UserId`, user_id);
 				localStorage.setItem(`Username`, username);
 				localStorage.setItem('Admin', data.isAdmin);
-				// const cartData = await API.makeRequest(`/cart/${user_id}`, 'GET')
-				// console.log(cartData);
 				localStorage.setItem('cartId', data.cart.id);
 				history.push("/");
 			}
@@ -110,8 +103,7 @@ const Home = ({username, password, setUsername, setPassword, setUserToken, logge
 					<p> Don't have an account? </p>
 					<Link to="/register" className="signUpLink">Sign Up</Link>
 				</div>
-			</>
-			}
+			</>}
 		</>
 	)
 }

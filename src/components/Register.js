@@ -28,16 +28,7 @@ const Register = ({
 		try {
 			const user = {username, password, email};
 			const data = await API.makeRequest('/users/register', 'POST', user);
-
-			console.log('USER IS:', user);
-			console.log('DATA IS:', data);
-
 			const token = data.token;
-
-			// const cartData = await API.makeRequest(`/cart/${data.id}`, 'POST', {total: 0})
-
-			// console.log(cartData);
-			console.log(token);
 
 			if (token) {
 				localStorage.setItem(`Token`, token);
@@ -48,7 +39,6 @@ const Register = ({
 				setRegisterToken(token);
 				await API.makeRequest('/users/login', 'POST', user)
 				history.push('/login');
-				// console.log(cartData);
 			} else {
 				alert(data.message)
 			}
@@ -59,49 +49,49 @@ const Register = ({
 
 	return (
 		<div>
-			<div className="loginMenu"></div>
+			<div className="registerMenu"></div>
 			<form onSubmit={confirmPasswords}>
-				<div className="signInMenuContent">
+				<div className="signUpMenuContent">
 					<div className="signInInputs">
-						<label>email</label>
 							<input
 								name="email"
+								placeholder="email"
 								required
 								onChange={(e) => setEmail(e.target.value)} 
 								value={email}
 							/>
 					</div>
 					<div className="signInInputs">
-						<label>username</label>
 							<input
 								name="userName"
+								placeholder="username"
 								required
 								onChange={(e) => setUsername(e.target.value)} 
 								value={username}
 							/>
 					</div>
 					<div className="signInInputs">
-							<label>password</label>
 								<input 
 								required
 								name="password"
+								placeholder="password"
 								onChange={(e) => setPassword(e.target.value)} 
 								value={password} 
 								required
 								type="password"
 							/>
 						<div className="signInInputs">
-							<label>confirm password</label>
 								<input
 									required
 									type="password"
+									placeholder="confirm password"
 									value={confirmPassword}
 									onChange={(e) => setconfirmPassword(e.target.value)}
 								/>
 						</div>
 					</div>
+					<button className="signUpButton" type="submit">Sign Up</button>
 				</div>
-				<button className="signInButton" type="submit">Sign Up</button>
 			</form>
 		</div>
 	);

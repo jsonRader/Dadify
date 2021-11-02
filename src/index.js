@@ -14,19 +14,11 @@ import {
 	Header,
 	Home,
 	Admin,
-	AdminUsers,
 	Cart,
-	// Deals,
-	Jokes,
+	JokeBook,
 	Message,
-	Products,
-	// SingleProduct
+	Products
 } from './components';
-
-// import {
-// 	Products,
-// 	SingleProduct
-// } from './components/Products'
 
 const App = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -34,11 +26,10 @@ const App = () => {
 	const [username, setUsername] = useState('');
 	const [registerToken, setRegisterToken] = useState('');
 	const [userToken, setUserToken] = useState('');
-
 	const [isAdmin, setIsAdmin] = useState(false);
-
 	const [productBoard, setProductBoard] = useState(null);
 	const [userProducts, setUserProducts] = useState([]);
+	const [users, setUsers] = useState([]);
 
 	useEffect(() => {
 		{localStorage.getItem('Token') 
@@ -83,7 +74,6 @@ const App = () => {
 							setIsAdmin={setIsAdmin}
 						/>
 					</Route>
-
 					<Route path="/register">
 						<Register
 							loggedIn={loggedIn}
@@ -96,7 +86,6 @@ const App = () => {
 							setRegisterToken={setRegisterToken}
 						/>
 					</Route>
-
 					<Route path="/login">
 						<LogIn
 							loggedIn={loggedIn}
@@ -112,15 +101,12 @@ const App = () => {
 							setIsAdmin={setIsAdmin}
 						/>
 					</Route>
-
 					<Route path="/admin">
-						<Admin />
+						<Admin 
+							users={users}
+							setUsers={setUsers}
+						/>
 					</Route>
-
-					<Route path="/adminusers">
-						<AdminUsers />
-					</Route>
-
 					<Route path="/cart">
 						<Cart loggedIn={loggedIn}/>
 					</Route>
@@ -134,27 +120,9 @@ const App = () => {
 							isAdmin={isAdmin}
 						/>
 					</Route>
-
-					{/* <Route exact path="/products/:productId">
-						<SingleProduct 
-							allProducts = {allProducts}
-                            cart = {cart}
-                            setCart = {_setCart}
-                            token = {token}
-                            userData={userData}
-                            setUserData = {setUserData}
-                            setAllProducts = {setAllProducts}
-						/>
-					</Route>  */}
-
-					{/* <Route path="/deals">
-						<Deals />
-					</Route> */}
-
 					<Route path="/jokes">
-						<Jokes />
+						<JokeBook />
 					</Route>
-
 					<Route>
 						<Message />
 					</Route>

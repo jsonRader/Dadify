@@ -1,24 +1,21 @@
 import React, {useState} from 'react';
-import {__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED} from 'react';
+// import {__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED} from 'react';
 import API from '../api/api';
 import {Button} from '@material-ui/core';
 
 
-const CartItems = ({cartId, id, name, price, productId, itemQuantity, setRender, loggedIn, index}) => {
-
+const CartItems = ({id, name, price, itemQuantity, setRender, loggedIn, index}) => {
     const [updateQuantity, setUpdateQuantity] = useState({quantity: itemQuantity});
     const [editItem, setEditItem] = useState(false);
 
     function updateItemQuantity(e) {
         setUpdateQuantity({quantity: Number(e.target.value)})
-        // console.log(updateQuantity);
-        // console.log(id);
     }
 
     async function submitEdit(e) {
         try {
-            if(loggedIn) {
-                const data = await API.makeRequest(`/cart_item/${id}`, 'PATCH', updateQuantity);
+            if (loggedIn) {
+                await API.makeRequest(`/cart_item/${id}`, 'PATCH', updateQuantity);
                 setRender(updateQuantity.quantity);
             } else {
                 itemQuantity = updateQuantity;
@@ -26,8 +23,6 @@ const CartItems = ({cartId, id, name, price, productId, itemQuantity, setRender,
                 non_User.items[index].quantity = updateQuantity.quantity;
                 localStorage.setItem("NonUserCart", JSON.stringify(non_User));
             }
-            
-            // console.log(data);
         } catch (error) {
             throw error;
         } finally {
@@ -38,14 +33,13 @@ const CartItems = ({cartId, id, name, price, productId, itemQuantity, setRender,
 
     async function removeItem(e) {
         try {
-            if(loggedIn) {
-                const deleteItem = await API.makeRequest(`/cart_item/${id}`, 'DELETE');
+            if (loggedIn) {
+                await API.makeRequest(`/cart_item/${id}`, 'DELETE');
             } else {
                 const nonUserCart = JSON.parse(localStorage.getItem("NonUserCart"));
                 nonUserCart.items.splice(index, 1);
                 localStorage.setItem("NonUserCart", JSON.stringify(nonUserCart));
             }
-            // console.log(deleteItem);
         } catch (error) {
             throw error;
         } finally {
@@ -57,7 +51,7 @@ const CartItems = ({cartId, id, name, price, productId, itemQuantity, setRender,
         <div className='cart-item'>
             <h2>Name: {name}</h2>
             <br></br>
-            <h3>Price: {price}</h3>
+            <h3>${price}</h3>
             {editItem ?
                 <>
                     <h3>Quantity: 
