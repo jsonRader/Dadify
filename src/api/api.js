@@ -1,8 +1,5 @@
 const BASE_URL = "https://afternoon-forest-55790.herokuapp.com/api";
 
-// const BASE_URL = "http://localhost:3000";
-
-
 import TokenUtilities from './token';
 
 export default {
