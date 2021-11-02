@@ -4,7 +4,8 @@ import {Link, useHistory} from 'react-router-dom';
 import API from '../api/api';
 import CartItems from './CartItems';
 
-const Cart = () => {
+const Cart = ({loggedIn}) => {
+
 	const history = useHistory();
 	const [cart, setCart] = useState([]);
 	const [render, setRender] = useState(0);
@@ -13,12 +14,20 @@ const Cart = () => {
 
 	useEffect(async function() {
 		try {
-			const data = await API.makeRequest(`/cart/${user_id}`, 'GET');
-			setCart(data);
+			// const username = localStorage.getItem('username');
+			if(loggedIn) {
+				const data = await API.makeRequest(`/cart/${user_id}`, 'GET');
+				setCart(data);
+			} else {
+				const nonUser = JSON.parse(localStorage.getItem('NonUserCart'));
+				setCart(nonUser);
+				console.log(cart)
+			}
 		} catch (error) {
 			throw error;
 		} 
 	}, [render]);
+
 
 	async function checkout(e) {
 		try {
@@ -46,17 +55,15 @@ const Cart = () => {
 
 		total = total.toFixed(2);
 		cartItemElements = cart.items.map((item, i) => {
-			return (
-				<CartItems 
-					cartId={item.cart_id}
-					id={item.id}
-					name={item.name}
-					price={item.price}
-					itemQuantity={item.quantity}
-					key={i}
-					setRender={setRender}
-				/>
-			)
+
+			return <CartItems cartId={item.cart_id}
+							  id={item.id}
+							  name={item.name}
+							  price={item.price}
+							  itemQuantity={item.quantity}
+							  key={i}
+							  setRender={setRender}
+							  loggedIn={loggedIn}/>
 		});
 	}
 

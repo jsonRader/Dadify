@@ -3,7 +3,9 @@ import {__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED} from 'react';
 import API from '../api/api';
 import {Button} from '@material-ui/core';
 
-const CartItems = ({id, name, price, itemQuantity, setRender}) => {
+
+const CartItems = ({cartId, id, name, price, productId, itemQuantity, setRender, loggedIn}) => {
+
     const [updateQuantity, setUpdateQuantity] = useState({quantity: itemQuantity});
     const [editItem, setEditItem] = useState(false);
 
