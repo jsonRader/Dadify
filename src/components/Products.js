@@ -82,7 +82,7 @@ const EditProduct = ({setRender, productBoard, setProductBoard, isAdmin, setEdit
 
     const productId = productBoard.id;
 
-    async function handleSubmit(id) {
+    async function handleSubmit(e, id) {
         try {
 			const data = await API.makeRequest(`/products/${id}`, 'PATCH', newEditProduct);
             setRender(data);
